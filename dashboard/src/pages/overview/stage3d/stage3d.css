@@ -1,0 +1,306 @@
+/* =========================================================================
+   3D 数字孪生舞台覆盖层样式（stage3d/）—— 仅作用于 Stage3D / Stage 的 3D 层。
+   舞台本体（光晕/环台/网格/参数小卡）样式仍在 Overview.css，此处只做：
+   1) 画布铺满与交互放行；2) 页签从装饰改可点击的覆盖；3) 标注卡片；4) 详情面板。
+   ========================================================================= */
+
+/* ---- three 画布：绝对铺满舞台，作为最底层 ---- */
+.s3d-host {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.s3d-host .s3d-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* 静态兜底层（stage-body/stage-fallback）不拦截 3D 交互，让事件穿透到画布 */
+.ov-stage .stage-body {
+  pointer-events: none;
+}
+
+.stage-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 34px 24px 10px;
+  gap: 14px;
+}
+
+.stage-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
+  color: #8fb8dd;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.stage-loading .ant-progress {
+  width: 240px;
+}
+
+/* ---- 页签：由装饰按钮升级为真实切换（覆盖 Overview.css 的 pointer-events:none） ---- */
+.stage-tab.is-live {
+  pointer-events: auto;
+  cursor: pointer;
+  transition: color 0.25s, border-color 0.25s, background 0.25s, box-shadow 0.25s;
+}
+
+.stage-tab.is-live:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* ---- 底部参数卡行：行容器放行画布拖拽，卡片本身保留交互 ---- */
+.ov-stage .stage-cards {
+  pointer-events: none;
+}
+
+.ov-stage .stage-cards .pcard {
+  pointer-events: auto;
+}
+
+/* ---- 部件标注卡片（老仓库 callout 风格：深色半透明圆角小卡 + 细描边 + 状态光点） ---- */
+.s3d-cards {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* 引线层（拍板 2026-10-02）：部件卡固定顶部卡槽，半透明引线连到部件锚点，
+   旋转时卡片位置稳定、只有引线跟随，消除卡片漂移/闪跳 */
+.s3d-leader {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.s3d-leader-line {
+  fill: none;
+  stroke: rgba(0, 199, 255, 0.38);
+  stroke-width: 1;
+  opacity: 0; /* 引擎回调按锚点可见性置 1/0，CSS 过渡消闪感 */
+  transition: opacity 0.25s ease, stroke 0.2s ease, stroke-width 0.2s ease;
+}
+
+.s3d-leader-line.is-hot {
+  stroke: rgba(0, 229, 255, 0.85);
+  stroke-width: 1.6;
+}
+
+.s3d-leader-line.is-sel {
+  stroke: rgba(255, 170, 0, 0.9);
+  stroke-width: 1.6;
+}
+
+.s3d-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 50% 100%; /* 近大远小：以卡底中点为缩放原点，卡片朝上生长 */
+  min-width: 150px;
+  max-width: 190px;
+  padding: 7px 12px 8px;
+  border-radius: 9px;
+  background: linear-gradient(165deg, rgba(18, 49, 82, 0.78), rgba(8, 21, 39, 0.9));
+  border: 1px solid rgba(0, 199, 255, 0.22);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.38);
+  pointer-events: auto;
+  cursor: pointer;
+  opacity: 0; /* 首帧重投影后再显示，避免闪现在左上角 */
+  /* 注意：transform 每帧被引擎回调直写，绝不参与 transition */
+  transition: opacity 0.25s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.s3d-card:hover,
+.s3d-card.is-hot {
+  border-color: rgba(0, 199, 255, 0.85);
+  box-shadow:
+    0 0 14px rgba(0, 199, 255, 0.4),
+    0 5px 16px rgba(0, 0, 0, 0.4);
+}
+
+.s3d-card.is-sel {
+  border-color: #00c7ff;
+  box-shadow:
+    0 0 18px rgba(0, 199, 255, 0.55),
+    0 5px 16px rgba(0, 0, 0, 0.42);
+}
+
+.s3d-card-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #cfe6ff;
+  font-size: 12px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* 状态色光点（卡片/详情面板共用） */
+.s3d-dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.s3d-card-row {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-top: 3px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.s3d-card-row .n {
+  color: #8fb8dd;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.s3d-card-row b {
+  color: #eaf6ff;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.s3d-card-row .u {
+  color: #5f7f9e;
+  font-size: 11px;
+}
+
+/* ---- 部件详情小面板（点击部件后右下浮出） ---- */
+.s3d-panel {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  z-index: 4;
+  width: 320px;
+  max-height: 52%;
+  overflow: auto;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: linear-gradient(160deg, rgba(18, 49, 82, 0.88), rgba(10, 26, 47, 0.94));
+  border: 1px solid rgba(0, 199, 255, 0.28);
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.45),
+    0 0 16px rgba(0, 199, 255, 0.12);
+}
+
+.s3d-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.s3d-panel-title {
+  color: #7fd0ff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.s3d-panel-mesh {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #5f7f9e;
+  font-size: 11px;
+}
+
+.s3d-panel-close {
+  flex: none;
+  color: #8fb8dd;
+}
+
+.s3d-ch {
+  padding: 6px 0;
+  border-top: 1px solid rgba(0, 199, 255, 0.1);
+}
+
+.s3d-ch-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.s3d-ch-name {
+  color: #cfe6ff;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.s3d-ch-val {
+  flex: none;
+  color: #eaf6ff;
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.s3d-ch-val em {
+  margin-left: 3px;
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 400;
+  color: #8fb8dd;
+}
+
+.s3d-ch-sub {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  color: #8fb8dd;
+  font-size: 12px;
+}
+
+.s3d-ch-range {
+  margin-left: auto;
+  color: #5f7f9e;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.s3d-panel-note {
+  margin-top: 6px;
+  color: #8fa3b8;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.s3d-panel-legend {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(0, 199, 255, 0.16);
+  color: #5f7f9e;
+  font-size: 11px;
+  line-height: 1.5;
+}

@@ -1,0 +1,19 @@
+diff --git a/runtime/agnes.mjs b/runtime/agnes.mjs
+--- a/runtime/agnes.mjs
++++ b/runtime/agnes.mjs
+--- a/runtime/agnes.mjs
++++ b/runtime/agnes.mjs
+@@ -358117,12 +358117,13 @@ async function runPrint(booted, p, io) {
+     const kind = payload?.kind;
+     io.stderr.write(`agnes: notice ${typeof kind === "string" ? kind : "unknown"}
+ `);
+   });
+   try {
+     const session = await openSession(booted, p, io.cwd);
++    await session.setYolo(true); // [phm-lite demo patch] unattended print mode: session-yolo (auditable), mirrors TUI /yolo
+     if (p.model) await session.setModel(p.model);
+     io.registerCancel?.(() => session.cancel());
+     await session.attach({ filter: { acpUpdates: false } });
+     const startSeq = session.lastServerSeq;
+     const opening = signalledBeforePrompt();
+     if (opening !== void 0) return opening;

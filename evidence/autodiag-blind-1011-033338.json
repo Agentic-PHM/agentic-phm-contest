@@ -1,0 +1,24 @@
+{
+  "run_id": "auto-1011-033338-0478e1e2",
+  "report_id": 12,
+  "ts": "2026-10-11T03:34:07",
+  "prompt_audit": {
+    "ok": true,
+    "hits": []
+  },
+  "truth_match": {
+    "ok": true,
+    "detail": {
+      "truth": "bpfo",
+      "said": "bpfo",
+      "component": "bearing_de",
+      "component_ok": true,
+      "confidence": 0.92
+    }
+  },
+  "agh_audit_scan": {
+    "state": "skip",
+    "detail": "未提供 AGH 审计目录"
+  },
+  "verdict": "PASS"
+}

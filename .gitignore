@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.env
+data/*.db
+data/operation-mode.json
+agh-home/
+agnes-harness/
+node_modules/
+.superpowers/
+.worktrees/
+data/autodiag/
+data/operator_sessions.json
+graphify-out/

@@ -1,0 +1,269 @@
+{
+ "generated_at": "2026-10-13T17:42:33",
+ "n_target_cases": 19,
+ "completed_cases": 2,
+ "partial": false,
+ "metrics": {
+  "n_cases": 2,
+  "n_scored": 0,
+  "invalid_case_n": 0,
+  "accuracy_all_valid_cases": 0.0,
+  "unscored_rate": 1.0,
+  "accuracy_all_samples": 0.0,
+  "accuracy_scored": null,
+  "refusal_rate": 0.0,
+  "confusion_matrix": {},
+  "false_positive_rate": null,
+  "negative_samples": 0,
+  "full_closure_rate": 0.0,
+  "report_only_rate": 0.0,
+  "tool_failure_n": 2,
+  "tool_failure_safe_rate": 1.0,
+  "tool_failure_false_conclusion_n": 0,
+  "latency_distribution_s": {
+   "n": 0,
+   "min": null,
+   "median": null,
+   "max": null
+  },
+  "confidence_calibration": [],
+  "rule_baseline": {
+   "accuracy_all_samples": 0.789,
+   "accuracy_all_valid_cases": null,
+   "false_positive_rate": 0.0,
+   "note": "包络谱±3Hz 峰/底噪比，显著阈 20.0（固定启发式，非调参；支持混合故障判定）",
+   "per_case": [
+    {
+     "case": "normal-baseline",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.963849307237824,
+      "BPFI": 1.8248624925613366
+     }
+    },
+    {
+     "case": "noise-mild",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.6080371073596917,
+      "BPFI": 1.8111056410973703
+     }
+    },
+    {
+     "case": "noise-interference",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.6653585536301985,
+      "BPFI": 1.9468964910611117
+     }
+    },
+    {
+     "case": "noise-heavy",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.7984065596700232,
+      "BPFI": 2.1108535701817575
+     }
+    },
+    {
+     "case": "normal-lowrpm",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 4.637799582302738,
+      "BPFI": 2.2431019136717305
+     }
+    },
+    {
+     "case": "bpfo-standard",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 195.6554929425742,
+      "BPFI": 5.503813484976247
+     }
+    },
+    {
+     "case": "bpfi-standard",
+     "truth": "bpfi",
+     "said": "bpfi",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.7510411835099984,
+      "BPFI": 291.944997761869
+     }
+    },
+    {
+     "case": "bpfo-sev-low",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 183.19439311038246,
+      "BPFI": 5.474620027706301
+     }
+    },
+    {
+     "case": "bpfo-boundary-kurt",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 166.00992811004326,
+      "BPFI": 5.32300630447591
+     }
+    },
+    {
+     "case": "bpfo-boundary-rms",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 198.08495244833696,
+      "BPFI": 5.477235654532821
+     }
+    },
+    {
+     "case": "bpfi-highrpm",
+     "truth": "bpfi",
+     "said": "bpfi",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.7410761188966428,
+      "BPFI": 283.06641887770655
+     }
+    },
+    {
+     "case": "bpfo-lowrpm",
+     "truth": "bpfo",
+     "said": "bpfo_bpfi",
+     "correct": false,
+     "in_band_amp": {
+      "BPFO": 97.43372739722221,
+      "BPFI": 80.69275982321734
+     }
+    },
+    {
+     "case": "bpfo-highrpm",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 259.1257652951765,
+      "BPFI": 9.790391403426689
+     }
+    },
+    {
+     "case": "mixed-bpfo-bpfi",
+     "truth": "bpfo_bpfi",
+     "said": "bpfo_bpfi",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 59.52218484220501,
+      "BPFI": 54.69316627939308
+     }
+    },
+    {
+     "case": "unbalance-1x",
+     "truth": "unbalance",
+     "said": "normal",
+     "correct": false,
+     "in_band_amp": {
+      "BPFO": 2.90733286943114,
+      "BPFI": 2.161850160135347
+     }
+    },
+    {
+     "case": "looseness-harmonics",
+     "truth": "looseness",
+     "said": "normal",
+     "correct": false,
+     "in_band_amp": {
+      "BPFO": 2.951977797986563,
+      "BPFI": 2.275805750418055
+     }
+    },
+    {
+     "case": "unknown-broadband",
+     "truth": "undetermined",
+     "said": "normal",
+     "correct": false,
+     "in_band_amp": {
+      "BPFO": 1.502610296936136,
+      "BPFI": 2.849685653814365
+     }
+    },
+    {
+     "case": "bpfo-tool-failure",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 195.6554929425742,
+      "BPFI": 5.503813484976247
+     }
+    },
+    {
+     "case": "bpfo-partial-data",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 195.6554929425742,
+      "BPFI": 5.503813484976247
+     }
+    }
+   ]
+  }
+ },
+ "cases": [
+  {
+   "case": "bpfo-tool-failure",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "no-report",
+   "correct": false,
+   "triggered": true,
+   "final_state": "failed",
+   "case_invalid": false,
+   "failure_reason": "cli_failed",
+   "latency_s": 32.1,
+   "report_id": null,
+   "task_created": false,
+   "confidence": null,
+   "conclusion": "",
+   "hedged": false,
+   "verification_ok": false,
+   "evidence_index": null
+  },
+  {
+   "case": "bpfo-partial-data",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "no-report",
+   "correct": false,
+   "triggered": true,
+   "final_state": "failed",
+   "case_invalid": false,
+   "failure_reason": "cli_failed",
+   "latency_s": 44.2,
+   "report_id": null,
+   "task_created": false,
+   "confidence": null,
+   "conclusion": "",
+   "hedged": false,
+   "verification_ok": false,
+   "evidence_index": null
+  }
+ ]
+}

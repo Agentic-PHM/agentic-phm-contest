@@ -1,0 +1,14 @@
+{
+  "rpm": 2980,
+  "fault": {
+    "type": "none",
+    "severity": 0
+  },
+  "noise": 0.05,
+  "temp_base": 45.0,
+  "temp_gain": 45.0,
+  "override": {
+    "rms": null,
+    "kurtosis": null
+  }
+}

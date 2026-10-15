@@ -1,0 +1,233 @@
+{
+ "generated_at": "2026-10-11T04:40:13",
+ "n_target_cases": 8,
+ "metrics": {
+  "n_cases": 8,
+  "n_scored": 8,
+  "confusion_matrix": {
+   "normal": {
+    "normal": 2
+   },
+   "bpfo": {
+    "bpfo": 4
+   },
+   "bpfi": {
+    "bpfi": 2
+   }
+  },
+  "accuracy": 1.0,
+  "false_positive_rate": 0.0,
+  "task_completion_rate": 1.0,
+  "latency_distribution_s": {
+   "n": 6,
+   "min": 28.7,
+   "median": 34.6,
+   "max": 73.2
+  },
+  "rule_baseline": {
+   "accuracy": 1.0,
+   "false_positive_rate": 0.0,
+   "note": "包络谱±3Hz 最优匹配，幅值阈值 1.0（固定启发式，非调参）",
+   "per_case": [
+    {
+     "case": "normal-baseline",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 0.0076339807938826595,
+      "BPFI": 0.007093703762476633
+     }
+    },
+    {
+     "case": "noise-interference",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 0.03397245594633128,
+      "BPFI": 0.039715684727751124
+     }
+    },
+    {
+     "case": "bpfo-standard",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 5.071620359703044,
+      "BPFI": 0.1426653149707704
+     }
+    },
+    {
+     "case": "bpfi-standard",
+     "truth": "bpfi",
+     "said": "bpfi",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 0.037652553325781164,
+      "BPFI": 6.2776790745659055
+     }
+    },
+    {
+     "case": "bpfo-boundary-kurt",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 2.4658129551913035,
+      "BPFI": 0.07906477676106899
+     }
+    },
+    {
+     "case": "bpfo-boundary-rms",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 5.676115437741131,
+      "BPFI": 0.1569499422877586
+     }
+    },
+    {
+     "case": "bpfi-highrpm",
+     "truth": "bpfi",
+     "said": "bpfi",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 0.043762662259518456,
+      "BPFI": 7.1149905233361235
+     }
+    },
+    {
+     "case": "bpfo-tool-failure",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 5.071620359703044,
+      "BPFI": 0.1426653149707704
+     }
+    }
+   ]
+  }
+ },
+ "cases": [
+  {
+   "case": "normal-baseline",
+   "kind": "normal",
+   "truth": "normal",
+   "said": "normal",
+   "correct": true,
+   "pipeline_false_trigger": false,
+   "latency_s": null,
+   "report_id": null,
+   "task_created": null,
+   "conclusion": "P-101 调相机当前运行状态：**正常，无异常**。\n\n依据（/api/device）：\n- 驱动端 DE：rms=2.106、峭度 kurtosis=1.903、峰值 pp=8.04，等级 normal\n- 非驱动端 NDE：rms=2.111、峭度 kurtosis=1.907、峰值 pp=7.975，等级 normal\n\n峭度约 1.9，远低于冲击型轴承缺陷判定阈值（4），两测点均处于正常",
+   "evidence_index": null
+  },
+  {
+   "case": "noise-interference",
+   "kind": "normal",
+   "truth": "normal",
+   "said": "normal",
+   "correct": true,
+   "pipeline_false_trigger": false,
+   "latency_s": null,
+   "report_id": null,
+   "task_created": null,
+   "conclusion": "**P-101 调相机当前运行状态：正常，无异常。**\n\n依据（/api/device）：\n- 驱动端 DE：rms=2.623、峭度 kurtosis=2.551、峰值 pp=16.715，等级 normal\n- 非驱动端 NDE：rms=2.625、峭度 kurtosis=2.529、峰值 pp=16.252，等级 normal\n\n两测点峭度约 2.5，仍低于冲击型轴承缺陷判定阈值（4），RM",
+   "evidence_index": null
+  },
+  {
+   "case": "bpfo-standard",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "bpfo",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 36.6,
+   "report_id": 16,
+   "task_created": true,
+   "conclusion": "驱动端轴承外圈BPFO缺陷：包络谱主峰134.77Hz命中理论BPFO(偏差0.33Hz在±3Hz内)并呈2x-6x谐波簇，峭度10.52远超阈值4，建议停机检查并更换驱动端轴承",
+   "evidence_index": "data\\autodiag\\auto-1011-043525-ea4621c7.index.json"
+  },
+  {
+   "case": "bpfi-standard",
+   "kind": "e2e",
+   "truth": "bpfi",
+   "said": "bpfi",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 36.9,
+   "report_id": 17,
+   "task_created": true,
+   "conclusion": "驱动端轴承内圈BPFI缺陷：包络谱主峰262.70Hz命中理论BPFI(偏差0.45Hz在±3Hz内)并呈2x-5x谐波簇，RMS 9.17远超基线，建议停机检查并更换驱动端轴承",
+   "evidence_index": "data\\autodiag\\auto-1011-043609-9c5b0a19.index.json"
+  },
+  {
+   "case": "bpfo-boundary-kurt",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "bpfo",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 32.6,
+   "report_id": 18,
+   "task_created": true,
+   "conclusion": "驱动端轴承外圈BPFO缺陷：包络谱主峰134.77Hz命中理论BPFO(偏差0.33Hz在±3Hz内)且呈2x/3x谐波簇，峭度8.05远超阈值4，建议停机检查并更换驱动端轴承",
+   "evidence_index": "data\\autodiag\\auto-1011-043657-7d0320f6.index.json"
+  },
+  {
+   "case": "bpfo-boundary-rms",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "bpfo",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 32.5,
+   "report_id": 19,
+   "task_created": true,
+   "conclusion": "驱动端轴承外圈BPFO缺陷：包络谱主峰134.77Hz命中理论BPFO(偏差0.33Hz在±3Hz内)且呈2x-6x完整谐波簇，峭度10.78远超阈值4，建议停机检查并更换驱动端轴承",
+   "evidence_index": "data\\autodiag\\auto-1011-043737-2e2aca80.index.json"
+  },
+  {
+   "case": "bpfi-highrpm",
+   "kind": "e2e",
+   "truth": "bpfi",
+   "said": "bpfi",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 28.7,
+   "report_id": 20,
+   "task_created": true,
+   "conclusion": "驱动端轴承内圈BPFI缺陷：包络谱主峰210.94Hz命中理论BPFI=211.2Hz(偏差0.26Hz在±3Hz内)且呈2x-5x谐波簇，峭度7.22远超阈值4，RMS 8.27高于基线约3.9倍，建议停机检查并更换驱动端轴承",
+   "evidence_index": "data\\autodiag\\auto-1011-043817-56f678d9.index.json"
+  },
+  {
+   "case": "bpfo-tool-failure",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "bpfo",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 73.2,
+   "report_id": 21,
+   "task_created": true,
+   "conclusion": "驱动端轴承缺陷（倾向性，外圈BPFO待复测确认）：峭度10.51远超阈值4且等级severe，但本次包络谱工具不可用，频域特征峰未能取证，置信度降级；建议尽快复测包络谱确认并停机检查驱动端轴承",
+   "evidence_index": "data\\autodiag\\auto-1011-043852-b7affeaa.index.json"
+  }
+ ]
+}

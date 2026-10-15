@@ -1,0 +1,43 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: pytest（离线单测：AGH/模型链路以模拟执行器注入，不触网）
+        run: python -m pytest tests/ -q
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: dashboard
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: dashboard/package-lock.json
+      - run: npm ci
+      - name: node 单测（agentState / 形象设置）
+        run: node --test tests/*.test.js
+      - name: 前端构建（必须在 dashboard 目录内，产物进 dist/）
+        run: npm run build
+      - name: 构建产物与映射表源一致（防漏同步）
+        run: |
+          test -f dist/index.html
+          diff <(python3 -c "import json;print(json.dumps(json.load(open('dist/models/equipment_map.json')),sort_keys=True))") \
+               <(python3 -c "import json;print(json.dumps(json.load(open('../data/equipment_map.json')),sort_keys=True))")
