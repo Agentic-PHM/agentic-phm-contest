@@ -1,0 +1,180 @@
+{
+ "run_id": "demo-001",
+ "exported_at": "2026-09-30T18:36:06",
+ "run_log": [
+  {
+   "ts": "2026-09-30T18:32:19",
+   "tool": "/api/device",
+   "args": "run_id=demo-001",
+   "latency_ms": 53.1
+  },
+  {
+   "ts": "2026-09-30T18:32:19",
+   "tool": "/api/device",
+   "args": "run_id=demo-001",
+   "latency_ms": 53.5
+  },
+  {
+   "ts": "2026-09-30T18:32:19",
+   "tool": "/api/device",
+   "args": "run_id=demo-001",
+   "latency_ms": 72.8
+  },
+  {
+   "ts": "2026-09-30T18:32:19",
+   "tool": "/api/device",
+   "args": "run_id=demo-001",
+   "latency_ms": 53.7
+  },
+  {
+   "ts": "2026-09-30T18:32:19",
+   "tool": "/api/device",
+   "args": "run_id=demo-001",
+   "latency_ms": 54.3
+  },
+  {
+   "ts": "2026-09-30T18:32:35",
+   "tool": "/api/device",
+   "args": "run_id=demo-001",
+   "latency_ms": 76.9
+  },
+  {
+   "ts": "2026-09-30T18:33:31",
+   "tool": "/api/trend",
+   "args": "point=DE&kpi=rms&hours=48&run_id=demo-001",
+   "latency_ms": 8.3
+  },
+  {
+   "ts": "2026-09-30T18:33:32",
+   "tool": "/api/trend",
+   "args": "point=NDE&kpi=rms&hours=48&run_id=demo-001",
+   "latency_ms": 4.3
+  },
+  {
+   "ts": "2026-09-30T18:33:43",
+   "tool": "/api/spectrum",
+   "args": "point=DE&type=fft&top=10&run_id=demo-001",
+   "latency_ms": 29.6
+  },
+  {
+   "ts": "2026-09-30T18:33:44",
+   "tool": "/api/spectrum",
+   "args": "point=NDE&type=fft&top=10&run_id=demo-001",
+   "latency_ms": 22.4
+  },
+  {
+   "ts": "2026-09-30T18:33:50",
+   "tool": "/api/spectrum",
+   "args": "point=DE&type=envelope&top=10&run_id=demo-001",
+   "latency_ms": 58.4
+  },
+  {
+   "ts": "2026-09-30T18:33:55",
+   "tool": "/api/spectrum",
+   "args": "point=NDE&type=envelope&top=10&run_id=demo-001",
+   "latency_ms": 23.8
+  },
+  {
+   "ts": "2026-09-30T18:34:04",
+   "tool": "/api/charfreq",
+   "args": "rpm=2980&run_id=demo-001",
+   "latency_ms": 0.8
+  },
+  {
+   "ts": "2026-09-30T18:35:05",
+   "tool": "/api/alarm/history",
+   "args": "equip=P-101&run_id=demo-001",
+   "latency_ms": 1.0
+  },
+  {
+   "ts": "2026-09-30T18:35:09",
+   "tool": "/api/task/create",
+   "args": "title=%cd%a3%bb%fa%bc%ec%b2%e9%a3%baP-101+%d6%e1%b3%d0%cd%e2%c8%a6+BPFO+%cb%f0%c9%cb&desc=%bb%f9%d3%da+envelope+%c6%d7+134.77+Hz+%c3%fc%d6%d0+BPFO+%c0%ed%c2%db%c6%b5+135.09+Hz%a3%a8%a1%c03Hz+%c8%dd%b2%ee%a3%a9%a3%ac%c7%d2+2%a1%c1~9%a1%c1+%d0%b3%b2%a8%b4%d8%cd%ea%d5%fb%a3%bbDE%2fNDE+%cb%ab%b2%e0+kurtosis%a1%d610.5%a3%ac18%3a32+%c6%f0+rms+%d3%c9+2.1+%cc%f8%d6%c1+6.7+%b3%d6%d0%f8%b6%f1%bb%af%a1%a3%bd%a8%d2%e9%cd%a3%bb%fa%b2%a2%bc%ec%b2%e9%c7%fd%b6%af%b6%cb%d6%e1%b3%d0%cd%e2%c8%a6%a1%a3&level=severe&source=diagnosis&run_id=demo-001",
+   "latency_ms": 7.4
+  },
+  {
+   "ts": "2026-09-30T18:35:22",
+   "tool": "/api/report/submit",
+   "args": "run_id=demo-001&equip=P-101&conclusion=%E8%BD%B4%E6%89%BF%E5%A4%96%E5%9C%88%20BPFO%20%E6%8D%9F%E4%BC%A4%EF%BC%9AP-101%20%E9%A9%B1%E5%8A%A8%E7%AB%AF%E8%BD%B4%E6%89%BF%E5%A4%96%E5%9C%88%E5%AD%98%E5%9C%A8%E6%97%A9%E6%9C%9F%E6%8D%9F%E4%BC%A4&confidence=0.92&evidence_json=%5B%7B%22step%22%3A%221%22%2C%22tool%22%3A%22%2Fapi%2Fdevice%22%2C%22key_numbers%22%3A%22DE%20rms%3D6.7%2C%20kurtosis%3D10.504%2C%20pp%3D66.725%2C%20level%3Dsevere%3B%20NDE%20rms%3D6.699%2C%20kurtosis%3D10.513%2C%20pp%3D67.212%2C%20level%3Dsevere%22%2C%22supports%22%3A%22%E7%A1%AE%E8%AE%A4%20DE%2FNDE%20%E5%8F%8C%E4%BE%A7%20severe%EF%BC%8C%E5%90%AF%E5%8A%A8%E8%AF%8A%E6%96%AD%EF%BC%8C%E5%80%99%E9%80%89%E5%81%87%E8%AE%BE%EF%BC%9A%E8%BD%B4%E6%89%BF%20BPFO%2FBPFI%2FBSF%2FFTF%E3%80%81%E4%B8%8D%E5%AF%B9%E4%B8%AD%E3%80%81%E4%B8%8D%E5%B9%B3%E8%A1%A1%E3%80%81%E8%AF%AF%E6%8A%A5%22%7D%2C%7B%22step%22%3A%222%22%2C%22tool%22%3A%22%2Fapi%2Ftrend%20%28DE%2FNDE%2C%20rms%2C%2048h%29%22%2C%22key_numbers%22%3A%22%E9%95%BF%E6%9C%9F%20rms%E2%89%881.6~3.0%20%E7%A8%B3%E5%AE%9A%EF%BC%9B2026-09-30%2018%3A32%20DE%2FNDE%20%E5%90%8C%E6%AD%A5%E8%B7%B3%E8%87%B3%20%E2%89%886.7%20%E5%B9%B6%E7%BB%B4%E6%8C%81%22%2C%22supports%22%3A%22%E6%8C%81%E7%BB%AD%E6%81%B6%E5%8C%96%EF%BC%8C%E8%AF%AF%E6%8A%A5%E5%81%87%E8%AE%BE%E6%8E%92%E9%99%A4%22%7D%2C%7B%22step%22%3A%223%22%2C%22tool%22%3A%22%2Fapi%2Fspectrum%20type%3Dfft%20%28DE%2FNDE%29%22%2C%22key_numbers%22%3A%22fr%3D49.667Hz%EF%BC%9B1%C3%97fr%3D49.805Hz%20%E5%B9%85%202.64%EF%BC%8C2%C3%97fr%3D99.609Hz%20%E5%B9%85%201.00%EF%BC%9B%E5%8F%A6%E6%9C%89%202.7~3.6kHz%20%E5%AE%BD%E5%B8%A6%E5%B3%B0%22%2C%22supports%22%3A%221%C3%97fr%20%E5%8D%A0%E4%B8%BB%E5%AF%BC%EF%BC%8C2%C3%97fr%E2%89%881%C3%97fr%20%E7%9A%84%2038%25%EF%BC%8C%E4%B8%8D%E5%B9%B3%E8%A1%A1%E8%AF%81%E6%8D%AE%EF%BC%9B%E5%AE%BD%E5%B8%A6%E5%B3%B0%E6%8F%90%E7%A4%BA%E8%BD%B4%E6%89%BF%E7%89%B9%E5%BE%81%22%7D%2C%7B%22step%22%3A%224%22%2C%22tool%22%3A%22%2Fapi%2Fspectrum%20type%3Denvelope%20%28DE%2FNDE%29%22%2C%22key_numbers%22%3A%22%E8%B0%90%E6%B3%A2%E7%B0%87%20134.766%2C%20270.508%2C%20405.273%2C%20540.039%2C%20675.781%2C%20810.547%2C%20945.312%2C%201215.82%20Hz%22%2C%22supports%22%3A%22%E5%9F%BA%E6%9C%AC%E9%A2%91%E7%8E%87%20134.766Hz%20%E5%8F%8A%E5%85%B6%202%C3%97~9%C3%97%20%E8%B0%90%E6%B3%A2%E5%AE%8C%E6%95%B4%EF%BC%8C%E6%8C%87%E5%90%91%E8%BD%B4%E6%89%BF%E7%89%B9%E5%BE%81%E9%A2%91%E7%8E%87%22%7D%2C%7B%22step%22%3A%225%22%2C%22tool%22%3A%22%2Fapi%2Fcharfreq%20rpm%3D2980%22%2C%22key_numbers%22%3A%22fr%3D49.667%2C%20BPFO%3D135.09%2C%20BPFI%3D262.24%2C%20BSF%3D69.66%2C%20FTF%3D16.89%22%2C%22supports%22%3A%22envelope%20%E4%B8%BB%E5%B3%B0%20134.766Hz%20%E8%90%BD%E5%9C%A8%20BPFO%C2%B13Hz%EF%BC%88132.09~138.09%EF%BC%89%E5%86%85%EF%BC%8C%E5%91%BD%E4%B8%AD%20BPFO%22%7D%2C%7B%22step%22%3A%226%22%2C%22tool%22%3A%22%2Fapi%2Falarm%2Fhistory%20equip%3DP-101%22%2C%22key_numbers%22%3A%224%20%E6%9D%A1%20severe%20%E6%8A%A5%E8%AD%A6%EF%BC%8Ckpi%3Dkurtosis%EF%BC%8C%E5%80%BC%E2%89%8810.50~10.51%EF%BC%8Cts%3D2026-09-30%2018%3A32%3A19~35%22%2C%22supports%22%3A%22%E6%8A%A5%E8%AD%A6%E6%97%B6%E9%97%B4%E4%B8%8E%20rms%20%E8%B7%B3%E5%8F%98%E6%97%B6%E9%97%B4%E4%B8%80%E8%87%B4%EF%BC%8C%E4%BD%90%E8%AF%81%E6%81%B6%E5%8C%96%22%7D%2C%7B%22step%22%3A%227%22%2C%22tool%22%3A%22%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%22%2C%22key_numbers%22%3A%22%E6%97%B6%E5%9F%9F%20kurtosis%3D10.5%3E4%20%E2%9C%93%EF%BC%9B%E9%A2%91%E5%9F%9F%20envelope%20%E5%B3%B0%20134.77Hz%20%E5%91%BD%E4%B8%AD%20BPFO%3D135.09Hz%20%E2%9C%93%EF%BC%9B%E8%B6%8B%E5%8A%BF%2018%3A32%20%E8%B5%B7%20rms%20%E6%8C%81%E7%BB%AD%E4%B8%8A%E5%8D%87%20%E2%9C%93%22%2C%22supports%22%3A%22%E4%B8%89%E9%A1%B9%E4%B8%80%E8%87%B4%EF%BC%8C%E7%BB%93%E8%AE%BA%EF%BC%9A%E8%BD%B4%E6%89%BF%E5%A4%96%E5%9C%88%20BPFO%20%E6%8D%9F%E4%BC%A4%22%7D%2C%7B%22step%22%3A%228%22%2C%22tool%22%3A%22%2Fapi%2Ftask%2Fcreate%22%2C%22key_numbers%22%3A%22id%3D1%2C%20level%3Dsevere%22%2C%22supports%22%3A%22%E4%BB%BB%E5%8A%A1%E5%B7%B2%E5%88%9B%E5%BB%BA%EF%BC%8C%E6%A0%87%E9%A2%98%E5%90%AB%20%E5%81%9C%E6%9C%BA%E6%A3%80%E6%9F%A5%22%7D%5D",
+   "latency_ms": 9.8
+  },
+  {
+   "ts": "2026-09-30T18:35:27",
+   "tool": "/api/device",
+   "args": "run_id=demo-001",
+   "latency_ms": 53.0
+  }
+ ],
+ "reports": [
+  {
+   "id": 1,
+   "ts": "2026-09-30T18:35:22",
+   "run_id": "demo-001",
+   "equip": "P-101",
+   "conclusion": "轴承外圈 BPFO 损伤：P-101 驱动端轴承外圈存在早期损伤",
+   "confidence": 0.92,
+   "evidence": "[{\"step\":\"1\",\"tool\":\"/api/device\",\"key_numbers\":\"DE rms=6.7, kurtosis=10.504, pp=66.725, level=severe; NDE rms=6.699, kurtosis=10.513, pp=67.212, level=severe\",\"supports\":\"确认 DE/NDE 双侧 severe，启动诊断，候选假设：轴承 BPFO/BPFI/BSF/FTF、不对中、不平衡、误报\"},{\"step\":\"2\",\"tool\":\"/api/trend (DE/NDE, rms, 48h)\",\"key_numbers\":\"长期 rms≈1.6~3.0 稳定；2026-09-30 18:32 DE/NDE 同步跳至 ≈6.7 并维持\",\"supports\":\"持续恶化，误报假设排除\"},{\"step\":\"3\",\"tool\":\"/api/spectrum type=fft (DE/NDE)\",\"key_numbers\":\"fr=49.667Hz；1×fr=49.805Hz 幅 2.64，2×fr=99.609Hz 幅 1.00；另有 2.7~3.6kHz 宽带峰\",\"supports\":\"1×fr 占主导，2×fr≈1×fr 的 38%，不平衡证据；宽带峰提示轴承特征\"},{\"step\":\"4\",\"tool\":\"/api/spectrum type=envelope (DE/NDE)\",\"key_numbers\":\"谐波簇 134.766, 270.508, 405.273, 540.039, 675.781, 810.547, 945.312, 1215.82 Hz\",\"supports\":\"基本频率 134.766Hz 及其 2×~9× 谐波完整，指向轴承特征频率\"},{\"step\":\"5\",\"tool\":\"/api/charfreq rpm=2980\",\"key_numbers\":\"fr=49.667, BPFO=135.09, BPFI=262.24, BSF=69.66, FTF=16.89\",\"supports\":\"envelope 主峰 134.766Hz 落在 BPFO±3Hz（132.09~138.09）内，命中 BPFO\"},{\"step\":\"6\",\"tool\":\"/api/alarm/history equip=P-101\",\"key_numbers\":\"4 条 severe 报警，kpi=kurtosis，值≈10.50~10.51，ts=2026-09-30 18:32:19~35\",\"supports\":\"报警时间与 rms 跳变时间一致，佐证恶化\"},{\"step\":\"7\",\"tool\":\"交叉验证\",\"key_numbers\":\"时域 kurtosis=10.5>4 ✓；频域 envelope 峰 134.77Hz 命中 BPFO=135.09Hz ✓；趋势 18:32 起 rms 持续上升 ✓\",\"supports\":\"三项一致，结论：轴承外圈 BPFO 损伤\"},{\"step\":\"8\",\"tool\":\"/api/task/create\",\"key_numbers\":\"id=1, level=severe\",\"supports\":\"任务已创建，标题含 停机检查\"}]"
+  }
+ ],
+ "alarms": [
+  {
+   "id": 1,
+   "equip": "P-101",
+   "point": "DE",
+   "ts": "2026-09-30T18:32:19",
+   "level": "severe",
+   "kpi": "kurtosis",
+   "value": 10.504456072036712,
+   "msg": "kurtosis=10.50 连续3点超过severe阈值"
+  },
+  {
+   "id": 2,
+   "equip": "P-101",
+   "point": "NDE",
+   "ts": "2026-09-30T18:32:19",
+   "level": "severe",
+   "kpi": "kurtosis",
+   "value": 10.512841021118705,
+   "msg": "kurtosis=10.51 连续3点超过severe阈值"
+  },
+  {
+   "id": 3,
+   "equip": "P-101",
+   "point": "DE",
+   "ts": "2026-09-30T18:32:35",
+   "level": "severe",
+   "kpi": "kurtosis",
+   "value": 10.504456072036712,
+   "msg": "kurtosis=10.50 连续3点超过severe阈值"
+  },
+  {
+   "id": 4,
+   "equip": "P-101",
+   "point": "NDE",
+   "ts": "2026-09-30T18:32:35",
+   "level": "severe",
+   "kpi": "kurtosis",
+   "value": 10.512841021118705,
+   "msg": "kurtosis=10.51 连续3点超过severe阈值"
+  }
+ ],
+ "tasks": [
+  {
+   "id": 1,
+   "ts": "2026-09-30T18:35:09",
+   "title": "ͣ����飺P-101 �����Ȧ BPFO ����",
+   "desc": "���� envelope �� 134.77 Hz ���� BPFO ����Ƶ 135.09 Hz����3Hz �ݲ���� 2��~9�� г����������DE/NDE ˫�� kurtosis��10.5��18:32 �� rms �� 2.1 ���� 6.7 �����񻯡�����ͣ������������������Ȧ��",
+   "level": "severe",
+   "source": "diagnosis",
+   "status": "open"
+  }
+ ],
+ "agh": {
+  "session_key": "agnes:local:local-dev:cli:workspace:6c5ae26b92640f9a",
+  "event_count": 80,
+  "model_text_excerpt": [
+   "命令输出（原样复述）：\n\n```json\n{\"name\":\"P-101\",\"points\":[{\"name\":\"DE\",\"current\":{\"rms\":2.108,\"kurtosis\":1.902,\"pp\":8.009},\"level\":\"normal\"},{\"name\":\"NDE\",\"current\":{\"rms\":2.106,\"kurtosis\":1.903,\"pp\":8.022},\"level\":\"normal\"}]}\n```",
+   "**当前可用技能（skills）：**\n\naudio-design, bevy-ecs, brainstorming, camera-systems, card-game, create-game-assets, diagnosis, dialogue-systems, dispatching-parallel-agents, executing-plans, finishing-a-development-branch, fps-shooter, ga, game-ai, game-feel, game-jam, game-ui-ux, godot-2d-movement, godot-3d-essentials, godot-animation, godot-audio, godot-csharp, godot-export, godot-gdscript, godot-multiplayer, godot-nodes-scenes, godot-physics, godot-resources, godot-shaders, godot-signals-groups, godot"
+  ]
+ }
+}

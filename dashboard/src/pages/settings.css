@@ -1,0 +1,83 @@
+.settings-page {
+  width: min(900px, 100%);
+  margin: 0 auto;
+}
+
+.settings-intro .ant-card-body {
+  padding: 20px 24px;
+}
+
+.settings-hero-icon {
+  margin-top: 5px;
+  color: #00c7ff;
+  font-size: 26px;
+}
+
+.settings-key-status,
+.settings-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.settings-actions > .ant-typography {
+  flex: 1 1 280px;
+}
+
+.settings-avatar-layout {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.settings-avatar-preview {
+  display: flex;
+  min-height: 250px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #1e3d5d;
+  border-radius: 10px;
+  background: radial-gradient(ellipse at center, rgba(0, 199, 255, 0.1), rgba(6, 21, 39, 0.2) 70%);
+}
+
+.settings-avatar-preview > div:first-child {
+  width: 180px;
+  height: 210px;
+}
+
+.settings-avatar-preview > .ant-typography {
+  margin: -4px 0 12px;
+}
+
+.settings-avatar-controls {
+  width: 100%;
+}
+
+.settings-avatar-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  .settings-intro .ant-card-body {
+    padding: 16px;
+  }
+
+  .settings-actions {
+    align-items: flex-start;
+  }
+
+  .settings-avatar-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-avatar-preview {
+    min-height: 230px;
+  }
+}

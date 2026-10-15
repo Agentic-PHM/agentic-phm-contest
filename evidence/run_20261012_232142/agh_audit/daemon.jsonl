@@ -1,0 +1,2 @@
+{"at":"2026-10-10T20:02:13.646Z","kind":"daemon.request_failed","detail":{"diagnosticId":"96c875c0-7ec5-4c7b-8848-40fbf79a53f5","method":"_agnes/v1/session.setYolo","errorCode":"UNKNOWN"}}
+{"at":"2026-10-10T20:04:57.899Z","kind":"daemon.request_failed","detail":{"diagnosticId":"9c2dee5c-1fed-49c4-b80b-f702dfc27f8a","method":"_agnes/v1/session.setYolo","errorCode":"UNKNOWN"}}

@@ -1,0 +1,265 @@
+{
+ "generated_at": "2026-10-11T05:04:48",
+ "n_target_cases": 8,
+ "metrics": {
+  "n_cases": 8,
+  "n_scored": 8,
+  "confusion_matrix": {
+   "normal": {
+    "normal": 2
+   },
+   "bpfo": {
+    "bpfo": 4
+   },
+   "bpfi": {
+    "bpfi": 2
+   }
+  },
+  "accuracy": 1.0,
+  "false_positive_rate": 0.0,
+  "task_completion_rate": 1.0,
+  "latency_distribution_s": {
+   "n": 6,
+   "min": 44.8,
+   "median": 50.8,
+   "max": 60.9
+  },
+  "confidence_calibration": [
+   {
+    "confidence": 0.7,
+    "n": 1,
+    "empirical_correct_rate": 1.0,
+    "note": "样本不足，仅实测汇总"
+   },
+   {
+    "confidence": 0.9,
+    "n": 2,
+    "empirical_correct_rate": 1.0,
+    "note": "样本不足，仅实测汇总"
+   },
+   {
+    "confidence": 0.92,
+    "n": 2,
+    "empirical_correct_rate": 1.0,
+    "note": "样本不足，仅实测汇总"
+   },
+   {
+    "confidence": 0.95,
+    "n": 1,
+    "empirical_correct_rate": 1.0,
+    "note": "样本不足，仅实测汇总"
+   }
+  ],
+  "rule_baseline": {
+   "accuracy": 1.0,
+   "false_positive_rate": 0.0,
+   "note": "包络谱±3Hz 最优匹配，幅值阈值 1.0（固定启发式，非调参）",
+   "per_case": [
+    {
+     "case": "normal-baseline",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 0.0076339807938826595,
+      "BPFI": 0.007093703762476633
+     }
+    },
+    {
+     "case": "noise-interference",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 0.03397245594633128,
+      "BPFI": 0.039715684727751124
+     }
+    },
+    {
+     "case": "bpfo-standard",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 5.071620359703044,
+      "BPFI": 0.1426653149707704
+     }
+    },
+    {
+     "case": "bpfi-standard",
+     "truth": "bpfi",
+     "said": "bpfi",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 0.037652553325781164,
+      "BPFI": 6.2776790745659055
+     }
+    },
+    {
+     "case": "bpfo-boundary-kurt",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 2.4658129551913035,
+      "BPFI": 0.07906477676106899
+     }
+    },
+    {
+     "case": "bpfo-boundary-rms",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 5.676115437741131,
+      "BPFI": 0.1569499422877586
+     }
+    },
+    {
+     "case": "bpfi-highrpm",
+     "truth": "bpfi",
+     "said": "bpfi",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 0.043762662259518456,
+      "BPFI": 7.1149905233361235
+     }
+    },
+    {
+     "case": "bpfo-tool-failure",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 5.071620359703044,
+      "BPFI": 0.1426653149707704
+     }
+    }
+   ]
+  }
+ },
+ "cases": [
+  {
+   "case": "normal-baseline",
+   "kind": "normal",
+   "truth": "normal",
+   "said": "normal",
+   "correct": true,
+   "pipeline_false_trigger": false,
+   "latency_s": null,
+   "report_id": null,
+   "task_created": null,
+   "conclusion": "**P-101 调相机当前运行状态：正常，无异常。**\n\n依据：\n- /api/device：驱动端 DE 与 非驱动端 NDE 均为 **normal** 等级；DE rms=2.109、峭度 kurtosis=1.903、pp=8.133；NDE rms=2.109、峭度 1.902、pp=8.094。\n- 时域峭度约 1.9，远低于冲击型轴承缺陷判定阈值（4），RMS 与峰值无越限。\n- /",
+   "evidence_index": null
+  },
+  {
+   "case": "noise-interference",
+   "kind": "normal",
+   "truth": "normal",
+   "said": "normal",
+   "correct": true,
+   "pipeline_false_trigger": false,
+   "latency_s": null,
+   "report_id": null,
+   "task_created": null,
+   "conclusion": "**P-101 调相机当前运行状态：正常，无异常。**\n\n依据（/api/device）：\n- 驱动端 DE：rms=2.632、峭度 kurtosis=2.536、峰值 pp=18.238，等级 normal\n- 非驱动端 NDE：rms=2.627、峭度 kurtosis=2.547、峰值 pp=17.386，等级 normal\n\n两测点峭度约 2.5，远低于冲击型轴承缺陷判定阈值（4），RM",
+   "evidence_index": null
+  },
+  {
+   "case": "bpfo-standard",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "bpfo",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 56.8,
+   "report_id": 22,
+   "task_created": true,
+   "confidence": 0.92,
+   "conclusion": "驱动端轴承外圈BPFO缺陷：包络谱主峰134.77Hz命中理论BPFO=135.09Hz(偏差0.33Hz在±3Hz内)且呈2x-6x谐波簇，峭度10.51远超阈值4，24h趋势近端加速恶化(基线约3.2倍)，建议停机检查并更换驱动端轴承",
+   "evidence_index": "data\\autodiag\\auto-1011-045847-795663e3.index.json"
+  },
+  {
+   "case": "bpfi-standard",
+   "kind": "e2e",
+   "truth": "bpfi",
+   "said": "bpfi",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 48.9,
+   "report_id": 23,
+   "task_created": true,
+   "confidence": 0.92,
+   "conclusion": "驱动端轴承内圈BPFI缺陷：包络谱主峰262.70Hz命中理论BPFI=262.24Hz(偏差0.45Hz在±3Hz内)且呈2x-5x谐波簇，峭度5.98超阈值4，24h趋势近端加速恶化(当前rms为基线约4.4倍)，建议停机检查并更换驱动端轴承",
+   "evidence_index": "data\\autodiag\\auto-1011-045952-f9f242ab.index.json"
+  },
+  {
+   "case": "bpfo-boundary-kurt",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "bpfo",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 52.8,
+   "report_id": 24,
+   "task_created": true,
+   "confidence": 0.9,
+   "conclusion": "驱动端轴承外圈BPFO缺陷：包络谱主峰134.77Hz命中理论BPFO=135.09Hz(偏差0.33Hz在±3Hz内)且呈2x-6x谐波簇，峭度8.01远超阈值4，24h趋势恶化，建议停机检查并更换驱动端轴承",
+   "evidence_index": "data\\autodiag\\auto-1011-050049-c4b92053.index.json"
+  },
+  {
+   "case": "bpfo-boundary-rms",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "bpfo",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 48.8,
+   "report_id": 25,
+   "task_created": true,
+   "confidence": 0.95,
+   "conclusion": "驱动端轴承外圈BPFO缺陷：包络谱主峰134.77Hz命中理论BPFO=135.09Hz(偏差0.33Hz在±3Hz内)且2x-6x谐波簇完整，峭度10.76远超阈值4，RMS 24h趋势恶化约2.7倍，建议停机检查并更换驱动端轴承",
+   "evidence_index": "data\\autodiag\\auto-1011-050149-63621549.index.json"
+  },
+  {
+   "case": "bpfi-highrpm",
+   "kind": "e2e",
+   "truth": "bpfi",
+   "said": "bpfi",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 44.8,
+   "report_id": 26,
+   "task_created": true,
+   "confidence": 0.9,
+   "conclusion": "驱动端轴承内圈BPFI缺陷：包络谱主峰210.94Hz命中理论BPFI=211.20Hz(偏差0.26Hz在±3Hz内)且呈2x-5x谐波簇，峭度7.22远超阈值4，24h趋势恶化约3倍，建议停机检查并更换驱动端轴承",
+   "evidence_index": "data\\autodiag\\auto-1011-050247-42059c81.index.json"
+  },
+  {
+   "case": "bpfo-tool-failure",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "bpfo",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 60.9,
+   "report_id": 27,
+   "task_created": true,
+   "confidence": 0.7,
+   "conclusion": "驱动端轴承存在缺陷（倾向外圈BPFO），峭度10.51远超阈值4且24h RMS恶化3.11倍；包络谱工具故障未能直接比对特征峰，建议复测包络谱确认BPFO=135.09Hz命中后立即停机检查并更换驱动端轴承",
+   "evidence_index": "data\\autodiag\\auto-1011-050341-a62f6275.index.json"
+  }
+ ]
+}

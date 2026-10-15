@@ -1,0 +1,431 @@
+/* =========================================================================
+   设备总览（空间舞台版）页内样式 —— 仅被 pages/Overview.jsx 与 pages/overview/* 引用。
+   视觉基调参照《设备总览理想图》：深蓝大屏 + 中央设备舞台 + 毛玻璃小卡片。
+   全部为纯 CSS（光晕/环台/网格/暗角均为渐变绘制），底图为 public/equip-base.png。
+   ========================================================================= */
+
+.ov-page {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 首次连接后端时的整页占位 */
+.ov-boot {
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.ov-boot-text {
+  color: #8fb8dd;
+  letter-spacing: 2px;
+}
+
+/* ---- 通用毛玻璃面板 ---- */
+.ov-glass {
+  background: linear-gradient(160deg, rgba(18, 49, 82, 0.72), rgba(10, 26, 47, 0.88));
+  border: 1px solid rgba(0, 199, 255, 0.16);
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.35),
+    inset 0 0 18px rgba(0, 199, 255, 0.04);
+}
+
+/* ===== 顶部 KPI 条 ===== */
+.ov-kpis {
+  display: flex;
+  gap: 12px;
+  flex: none;
+}
+
+.kpi-device {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 18px 12px;
+}
+
+.kpi-health {
+  width: 320px;
+  flex: none;
+  padding: 10px 18px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.kpi-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8fb8dd;
+  font-size: 12px;
+  letter-spacing: 3px;
+}
+
+.kpi-device-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.kpi-device-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #eaf6ff;
+  letter-spacing: 1px;
+}
+
+.kpi-device-name em {
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 600;
+  color: #00c7ff;
+  margin-left: 6px;
+  letter-spacing: 2px;
+}
+
+.kpi-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #8fb8dd;
+  font-size: 12px;
+}
+
+.kpi-device-sub,
+.kpi-health-sub {
+  margin-top: 2px;
+  color: #5f7f9e;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.kpi-score {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi-score-unit {
+  font-size: 14px;
+  font-weight: 400;
+  color: #8fb8dd;
+}
+
+/* ===== 中央空间舞台 ===== */
+.ov-stage {
+  position: relative;
+  flex: 1;
+  min-height: 430px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 199, 255, 0.14);
+  overflow: hidden;
+  background:
+    radial-gradient(1100px 380px at 50% 112%, rgba(0, 199, 255, 0.14), transparent 62%),
+    radial-gradient(900px 480px at 82% -24%, rgba(34, 80, 140, 0.38), transparent 62%),
+    radial-gradient(700px 380px at 8% -18%, rgba(20, 60, 105, 0.35), transparent 60%),
+    linear-gradient(180deg, #0b1e33 0%, #081527 100%);
+}
+
+/* 淡网格（中心淡出）+ 暗角，增强舞台纵深 */
+.ov-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 199, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 199, 255, 0.045) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 42%, rgba(0, 0, 0, 0.85), transparent 74%);
+  mask-image: radial-gradient(ellipse at 50% 42%, rgba(0, 0, 0, 0.85), transparent 74%);
+  pointer-events: none;
+}
+
+.ov-stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 46%, transparent 58%, rgba(2, 8, 18, 0.42) 100%);
+  pointer-events: none;
+}
+
+/* 底部光晕（呼吸动画） */
+.stage-halo {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  width: min(78%, 980px);
+  height: 200px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(0, 199, 255, 0.3),
+    rgba(0, 199, 255, 0.1) 55%,
+    transparent 74%
+  );
+  filter: blur(22px);
+  animation: stage-breathe 6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* 底部环台描边（设备图压在环上，营造"舞台"落地感） */
+.stage-ring {
+  position: absolute;
+  left: 50%;
+  bottom: calc(8% + 18px);
+  width: min(62%, 820px);
+  height: 110px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 1px solid rgba(0, 199, 255, 0.38);
+  box-shadow:
+    0 0 26px rgba(0, 199, 255, 0.22),
+    inset 0 0 30px rgba(0, 199, 255, 0.12);
+  pointer-events: none;
+}
+
+@keyframes stage-breathe {
+  from {
+    opacity: 0.65;
+    transform: translateX(-50%) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.04);
+  }
+}
+
+/* 装饰性视角页签（右上角）。装饰按钮，拍板：不接功能，pointer-events:none 保证点击无任何反应。 */
+.stage-tabs {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+}
+
+.stage-tab {
+  padding: 3px 14px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #9fd8ff;
+  background: rgba(6, 28, 50, 0.66);
+  border: 1px solid rgba(0, 199, 255, 0.26);
+  border-radius: 999px;
+  cursor: default;
+  pointer-events: none;
+  user-select: none;
+}
+
+.stage-tab.is-active {
+  color: #eaf6ff;
+  border-color: rgba(0, 199, 255, 0.65);
+  background: rgba(0, 82, 130, 0.55);
+  box-shadow: 0 0 12px rgba(0, 199, 255, 0.28);
+}
+
+/* 设备底图（透明 PNG，drop-shadow 融入舞台背景） */
+.stage-body {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 34px 24px 10px;
+}
+
+.stage-equip {
+  display: block;
+  position: relative;
+  z-index: 2;
+  max-width: min(86%, 940px);
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 20px 34px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 42px rgba(0, 199, 255, 0.16));
+}
+
+/* ===== 舞台底部小参数卡片 ===== */
+.stage-cards {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 16px 14px;
+}
+
+.pcard {
+  --lv: #52c41a;
+  position: relative;
+  flex: 1 1 172px;
+  min-width: 158px;
+  max-width: 238px;
+  padding: 9px 14px 8px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: linear-gradient(165deg, rgba(18, 49, 82, 0.66), rgba(8, 21, 39, 0.82));
+  border: 1px solid rgba(0, 199, 255, 0.16);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.32);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.pcard:hover {
+  border-color: rgba(0, 199, 255, 0.4);
+  box-shadow:
+    0 6px 22px rgba(0, 0, 0, 0.4),
+    0 0 14px rgba(0, 199, 255, 0.14);
+}
+
+/* 顶部状态色微光条 */
+.pcard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--lv), transparent);
+  opacity: 0.8;
+}
+
+/* 左上角状态色微光晕 */
+.pcard::after {
+  content: '';
+  position: absolute;
+  top: -34px;
+  left: -34px;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--lv), transparent);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.pcard-name {
+  color: #8fb8dd;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.pcard-value {
+  margin: 2px 0;
+  color: #eaf6ff;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+
+.pcard-unit {
+  margin-left: 5px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #8fb8dd;
+}
+
+.pcard-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.pcard-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.pcard-range {
+  margin-left: auto;
+  color: #5f7f9e;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.pcard-skel {
+  padding: 12px 14px;
+}
+
+/* ===== 底部健康因子摘要条 ===== */
+.ov-footer {
+  flex: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  padding: 10px 18px;
+}
+
+.footer-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #cfe6ff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.footer-note {
+  color: #5f7f9e;
+  font-size: 12px;
+}
+
+.footer-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #cfe6ff;
+  font-size: 13px;
+  padding: 3px 12px;
+  border: 1px solid rgba(0, 199, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(6, 28, 50, 0.5);
+}
+
+.footer-item b {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+/* 占位链接：智能体工作流独立页（Task D/E）接入后生效 */
+.wf-link {
+  margin-left: auto;
+  color: #00c7ff;
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.wf-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}

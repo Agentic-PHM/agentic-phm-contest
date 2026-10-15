@@ -1,0 +1,904 @@
+{
+ "source": "blind-benchmark-20261013-1602.json",
+ "metrics_before": {
+  "n_cases": 19,
+  "n_scored": 16,
+  "unscored_rate": 0.158,
+  "accuracy_all_samples": 0.737,
+  "accuracy_scored": 0.875,
+  "refusal_rate": 0.0,
+  "confusion_matrix": {
+   "normal": {
+    "normal": 5
+   },
+   "bpfo": {
+    "bpfo": 6
+   },
+   "bpfi": {
+    "bpfi": 2
+   },
+   "bpfo_bpfi": {
+    "bpfo": 1
+   },
+   "unbalance": {
+    "unbalance": 1
+   },
+   "undetermined": {
+    "bpfo_bpfi": 1
+   }
+  },
+  "false_positive_rate": 0.0,
+  "negative_samples": 5,
+  "full_closure_rate": 0.571,
+  "report_only_rate": 0.786,
+  "latency_distribution_s": {
+   "n": 11,
+   "min": 80.4,
+   "median": 120.6,
+   "max": 229.1
+  },
+  "confidence_calibration": [
+   {
+    "confidence": 0.82,
+    "n": 1,
+    "empirical_correct_rate": 0.0,
+    "note": "样本不足，仅实测汇总"
+   },
+   {
+    "confidence": 0.88,
+    "n": 1,
+    "empirical_correct_rate": 0.0,
+    "note": "样本不足，仅实测汇总"
+   },
+   {
+    "confidence": 0.9,
+    "n": 3,
+    "empirical_correct_rate": 1.0,
+    "note": "样本不足，仅实测汇总"
+   },
+   {
+    "confidence": 0.92,
+    "n": 4,
+    "empirical_correct_rate": 1.0,
+    "note": "样本不足，仅实测汇总"
+   },
+   {
+    "confidence": 0.95,
+    "n": 2,
+    "empirical_correct_rate": 1.0,
+    "note": "样本不足，仅实测汇总"
+   }
+  ],
+  "rule_baseline": {
+   "accuracy_all_samples": 0.789,
+   "false_positive_rate": 0.0,
+   "note": "包络谱±3Hz 峰/底噪比，显著阈 20.0（固定启发式，非调参；支持混合故障判定）",
+   "per_case": [
+    {
+     "case": "normal-baseline",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.963849307237824,
+      "BPFI": 1.8248624925613366
+     }
+    },
+    {
+     "case": "noise-mild",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.6080371073596917,
+      "BPFI": 1.8111056410973703
+     }
+    },
+    {
+     "case": "noise-interference",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.6653585536301985,
+      "BPFI": 1.9468964910611117
+     }
+    },
+    {
+     "case": "noise-heavy",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.7984065596700232,
+      "BPFI": 2.1108535701817575
+     }
+    },
+    {
+     "case": "normal-lowrpm",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 4.637799582302738,
+      "BPFI": 2.2431019136717305
+     }
+    },
+    {
+     "case": "bpfo-standard",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 195.6554929425742,
+      "BPFI": 5.503813484976247
+     }
+    },
+    {
+     "case": "bpfi-standard",
+     "truth": "bpfi",
+     "said": "bpfi",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.7510411835099984,
+      "BPFI": 291.944997761869
+     }
+    },
+    {
+     "case": "bpfo-sev-low",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 183.19439311038246,
+      "BPFI": 5.474620027706301
+     }
+    },
+    {
+     "case": "bpfo-boundary-kurt",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 166.00992811004326,
+      "BPFI": 5.32300630447591
+     }
+    },
+    {
+     "case": "bpfo-boundary-rms",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 198.08495244833696,
+      "BPFI": 5.477235654532821
+     }
+    },
+    {
+     "case": "bpfi-highrpm",
+     "truth": "bpfi",
+     "said": "bpfi",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.7410761188966428,
+      "BPFI": 283.06641887770655
+     }
+    },
+    {
+     "case": "bpfo-lowrpm",
+     "truth": "bpfo",
+     "said": "bpfo_bpfi",
+     "correct": false,
+     "in_band_amp": {
+      "BPFO": 97.43372739722221,
+      "BPFI": 80.69275982321734
+     }
+    },
+    {
+     "case": "bpfo-highrpm",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 259.1257652951765,
+      "BPFI": 9.790391403426689
+     }
+    },
+    {
+     "case": "mixed-bpfo-bpfi",
+     "truth": "bpfo_bpfi",
+     "said": "bpfo_bpfi",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 59.52218484220501,
+      "BPFI": 54.69316627939308
+     }
+    },
+    {
+     "case": "unbalance-1x",
+     "truth": "unbalance",
+     "said": "normal",
+     "correct": false,
+     "in_band_amp": {
+      "BPFO": 2.90733286943114,
+      "BPFI": 2.161850160135347
+     }
+    },
+    {
+     "case": "looseness-harmonics",
+     "truth": "looseness",
+     "said": "normal",
+     "correct": false,
+     "in_band_amp": {
+      "BPFO": 2.951977797986563,
+      "BPFI": 2.275805750418055
+     }
+    },
+    {
+     "case": "unknown-broadband",
+     "truth": "undetermined",
+     "said": "normal",
+     "correct": false,
+     "in_band_amp": {
+      "BPFO": 1.502610296936136,
+      "BPFI": 2.849685653814365
+     }
+    },
+    {
+     "case": "bpfo-tool-failure",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 195.6554929425742,
+      "BPFI": 5.503813484976247
+     }
+    },
+    {
+     "case": "bpfo-partial-data",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 195.6554929425742,
+      "BPFI": 5.503813484976247
+     }
+    }
+   ]
+  }
+ },
+ "metrics_after": {
+  "n_cases": 19,
+  "n_scored": 16,
+  "invalid_case_n": 1,
+  "accuracy_all_valid_cases": 0.833,
+  "unscored_rate": 0.158,
+  "accuracy_all_samples": 0.789,
+  "accuracy_scored": 0.938,
+  "refusal_rate": 0.0,
+  "confusion_matrix": {
+   "normal": {
+    "normal": 5
+   },
+   "bpfo": {
+    "bpfo": 6
+   },
+   "bpfi": {
+    "bpfi": 2
+   },
+   "bpfo_bpfi": {
+    "bpfo_bpfi": 1
+   },
+   "unbalance": {
+    "unbalance": 1
+   },
+   "undetermined": {
+    "abnormal-untyped": 1
+   }
+  },
+  "false_positive_rate": 0.0,
+  "negative_samples": 5,
+  "full_closure_rate": 0.571,
+  "report_only_rate": 0.786,
+  "tool_failure_n": 2,
+  "tool_failure_safe_rate": 1.0,
+  "tool_failure_false_conclusion_n": 0,
+  "latency_distribution_s": {
+   "n": 11,
+   "min": 80.4,
+   "median": 120.6,
+   "max": 229.1
+  },
+  "confidence_calibration": [
+   {
+    "confidence": 0.82,
+    "n": 1,
+    "empirical_correct_rate": 0.0,
+    "note": "样本不足，仅实测汇总"
+   },
+   {
+    "confidence": 0.88,
+    "n": 1,
+    "empirical_correct_rate": 1.0,
+    "note": "样本不足，仅实测汇总"
+   },
+   {
+    "confidence": 0.9,
+    "n": 3,
+    "empirical_correct_rate": 1.0,
+    "note": "样本不足，仅实测汇总"
+   },
+   {
+    "confidence": 0.92,
+    "n": 4,
+    "empirical_correct_rate": 1.0,
+    "note": "样本不足，仅实测汇总"
+   },
+   {
+    "confidence": 0.95,
+    "n": 2,
+    "empirical_correct_rate": 1.0,
+    "note": "样本不足，仅实测汇总"
+   }
+  ],
+  "rule_baseline": {
+   "accuracy_all_samples": 0.789,
+   "accuracy_all_valid_cases": 0.833,
+   "false_positive_rate": 0.0,
+   "note": "包络谱±3Hz 峰/底噪比，显著阈 20.0（固定启发式，非调参；支持混合故障判定）",
+   "per_case": [
+    {
+     "case": "normal-baseline",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.963849307237824,
+      "BPFI": 1.8248624925613366
+     }
+    },
+    {
+     "case": "noise-mild",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.6080371073596917,
+      "BPFI": 1.8111056410973703
+     }
+    },
+    {
+     "case": "noise-interference",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.6653585536301985,
+      "BPFI": 1.9468964910611117
+     }
+    },
+    {
+     "case": "noise-heavy",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.7984065596700232,
+      "BPFI": 2.1108535701817575
+     }
+    },
+    {
+     "case": "normal-lowrpm",
+     "truth": "normal",
+     "said": "normal",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 4.637799582302738,
+      "BPFI": 2.2431019136717305
+     }
+    },
+    {
+     "case": "bpfo-standard",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 195.6554929425742,
+      "BPFI": 5.503813484976247
+     }
+    },
+    {
+     "case": "bpfi-standard",
+     "truth": "bpfi",
+     "said": "bpfi",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.7510411835099984,
+      "BPFI": 291.944997761869
+     }
+    },
+    {
+     "case": "bpfo-sev-low",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 183.19439311038246,
+      "BPFI": 5.474620027706301
+     }
+    },
+    {
+     "case": "bpfo-boundary-kurt",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 166.00992811004326,
+      "BPFI": 5.32300630447591
+     }
+    },
+    {
+     "case": "bpfo-boundary-rms",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 198.08495244833696,
+      "BPFI": 5.477235654532821
+     }
+    },
+    {
+     "case": "bpfi-highrpm",
+     "truth": "bpfi",
+     "said": "bpfi",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 1.7410761188966428,
+      "BPFI": 283.06641887770655
+     }
+    },
+    {
+     "case": "bpfo-lowrpm",
+     "truth": "bpfo",
+     "said": "bpfo_bpfi",
+     "correct": false,
+     "in_band_amp": {
+      "BPFO": 97.43372739722221,
+      "BPFI": 80.69275982321734
+     }
+    },
+    {
+     "case": "bpfo-highrpm",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 259.1257652951765,
+      "BPFI": 9.790391403426689
+     }
+    },
+    {
+     "case": "mixed-bpfo-bpfi",
+     "truth": "bpfo_bpfi",
+     "said": "bpfo_bpfi",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 59.52218484220501,
+      "BPFI": 54.69316627939308
+     }
+    },
+    {
+     "case": "unbalance-1x",
+     "truth": "unbalance",
+     "said": "normal",
+     "correct": false,
+     "in_band_amp": {
+      "BPFO": 2.90733286943114,
+      "BPFI": 2.161850160135347
+     }
+    },
+    {
+     "case": "looseness-harmonics",
+     "truth": "looseness",
+     "said": "normal",
+     "correct": false,
+     "in_band_amp": {
+      "BPFO": 2.951977797986563,
+      "BPFI": 2.275805750418055
+     }
+    },
+    {
+     "case": "unknown-broadband",
+     "truth": "undetermined",
+     "said": "normal",
+     "correct": false,
+     "in_band_amp": {
+      "BPFO": 1.502610296936136,
+      "BPFI": 2.849685653814365
+     }
+    },
+    {
+     "case": "bpfo-tool-failure",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 195.6554929425742,
+      "BPFI": 5.503813484976247
+     }
+    },
+    {
+     "case": "bpfo-partial-data",
+     "truth": "bpfo",
+     "said": "bpfo",
+     "correct": true,
+     "in_band_amp": {
+      "BPFO": 195.6554929425742,
+      "BPFI": 5.503813484976247
+     }
+    }
+   ]
+  }
+ },
+ "changed_labels": [
+  [
+   "mixed-bpfo-bpfi",
+   "bpfo",
+   "bpfo_bpfi"
+  ],
+  [
+   "unknown-broadband",
+   "bpfo_bpfi",
+   "abnormal-untyped"
+  ]
+ ],
+ "cases": [
+  {
+   "case": "normal-baseline",
+   "kind": "normal",
+   "truth": "normal",
+   "said": "normal",
+   "correct": true,
+   "pipeline_false_trigger": true,
+   "latency_s": null,
+   "report_id": null,
+   "task_created": null,
+   "conclusion": "**P-101 调相机当前运行状态：正常，无异常。**\n\n依据（/api/device）：\n- 驱动端 DE：rms=2.112、峭度 kurtosis=1.91、峰值 pp=8.34，等级 normal\n- 非驱动端 NDE：rms=2.106、峭度 kurtosis=1.91、峰值 pp=8.27，等级 normal\n\n两测点峭度约 1.9，远低于冲击型轴承缺陷判定阈值（4），RMS 与峰值均",
+   "evidence_index": null,
+   "said_before_rescore": "normal"
+  },
+  {
+   "case": "noise-mild",
+   "kind": "normal",
+   "truth": "normal",
+   "said": "normal",
+   "correct": true,
+   "pipeline_false_trigger": false,
+   "latency_s": null,
+   "report_id": null,
+   "task_created": null,
+   "conclusion": "**P-101 调相机当前运行状态：正常，无异常。**\n\n依据（/api/device）：\n- 驱动端 DE：rms=2.295、峭度 kurtosis=2.20、峰值 pp=13.09，等级 normal\n- 非驱动端 NDE：rms=2.298、峭度 kurtosis=2.19、峰值 pp=12.40，等级 normal\n\n两测点峭度约 2.2，仍低于冲击型轴承缺陷判定阈值（4），RMS 与峰",
+   "evidence_index": null,
+   "said_before_rescore": "normal"
+  },
+  {
+   "case": "noise-interference",
+   "kind": "normal",
+   "truth": "normal",
+   "said": "normal",
+   "correct": true,
+   "pipeline_false_trigger": false,
+   "latency_s": null,
+   "report_id": null,
+   "task_created": null,
+   "conclusion": "**P-101 调相机当前运行状态：正常，无异常。**\n\n依据（/api/device）：\n- 驱动端 DE：rms=2.626、峭度 kurtosis=2.557、峰值 pp=17.27，等级 normal\n- 非驱动端 NDE：rms=2.641、峭度 kurtosis=2.565、峰值 pp=18.57，等级 normal\n\n两测点峭度约 2.56，仍低于冲击型轴承缺陷判定阈值（4），RMS",
+   "evidence_index": null,
+   "said_before_rescore": "normal"
+  },
+  {
+   "case": "noise-heavy",
+   "kind": "normal",
+   "truth": "normal",
+   "said": "normal",
+   "correct": true,
+   "pipeline_false_trigger": false,
+   "latency_s": null,
+   "report_id": null,
+   "task_created": null,
+   "conclusion": "**P-101 调相机当前运行状态：正常，无异常。**\n\n依据（/api/device）：\n- 驱动端 DE：rms=3.109、峭度 kurtosis=2.743、峰值 pp=21.70，等级 normal\n- 非驱动端 NDE：rms=3.072、峭度 kurtosis=2.796、峰值 pp=23.14，等级 normal\n\n两测点峭度约 2.75，仍低于冲击型轴承缺陷判定阈值（4），RMS",
+   "evidence_index": null,
+   "said_before_rescore": "normal"
+  },
+  {
+   "case": "normal-lowrpm",
+   "kind": "normal",
+   "truth": "normal",
+   "said": "normal",
+   "correct": true,
+   "pipeline_false_trigger": false,
+   "latency_s": null,
+   "report_id": null,
+   "task_created": null,
+   "conclusion": "P-101 调相机当前运行状态：正常，无异常。\n\n依据（/api/device）：\n- 驱动端 DE：rms=2.11、峭度 kurtosis=1.909、峰值 pp=8.23，等级 normal\n- 非驱动端 NDE：rms=2.108、峭度 kurtosis=1.905、峰值 pp=8.21，等级 normal\n\n两测点峭度约 1.9，远低于冲击型轴承缺陷判定阈值（4），RMS 与峰值均在正常",
+   "evidence_index": null,
+   "said_before_rescore": "normal"
+  },
+  {
+   "case": "bpfo-standard",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "bpfo",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 144.7,
+   "report_id": 31,
+   "task_created": true,
+   "confidence": 0.95,
+   "conclusion": "驱动端轴承外圈缺陷(BPFO)：包络谱主峰134.77Hz精确命中理论BPFO=135.09Hz(偏差0.33Hz在±3Hz内)且呈2x-6x谐波簇，峭度10.50远超阈值4，live实时段RMS从约2.11升至6.70(约3.2倍短时突变)，三项证据一致，建议停机检查并更换驱动端轴承(bearing_de)",
+   "hedged": false,
+   "verification_ok": true,
+   "evidence_index": "data\\autodiag\\auto-1013-160742-691f5dca.index.json",
+   "case_invalid": false,
+   "said_before_rescore": "bpfo"
+  },
+  {
+   "case": "bpfi-standard",
+   "kind": "e2e",
+   "truth": "bpfi",
+   "said": "bpfi",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 92.5,
+   "report_id": 32,
+   "task_created": true,
+   "confidence": 0.92,
+   "conclusion": "驱动端轴承内圈缺陷(BPFI)：包络谱主峰262.70Hz精确命中理论BPFI=262.24Hz(偏差0.46Hz在±3Hz内)且呈2x-5x谐波簇，峭度5.97超阈值4，RMS 9.17远超基线，live实时段RMS从约2.11升至9.17(约4.35倍短时突变)，三项证据一致，建议停机检查并更换驱动端轴承(bearing_de)",
+   "hedged": false,
+   "verification_ok": true,
+   "evidence_index": "data\\autodiag\\auto-1013-161047-2317d7e8.index.json",
+   "case_invalid": false,
+   "said_before_rescore": "bpfi"
+  },
+  {
+   "case": "bpfo-sev-low",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "bpfo",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 84.4,
+   "report_id": 33,
+   "task_created": true,
+   "confidence": 0.9,
+   "conclusion": "驱动端轴承外圈缺陷(BPFO)：包络谱主峰134.77Hz命中理论BPFO=135.09Hz(偏差0.33Hz在±3Hz内)且呈2x-4x谐波簇，峭度9.45远超阈值4，live实时段RMS从约2.11升至5.21(约2.47倍短时突变)，三项证据一致，建议停机检查并更换驱动端轴承(bearing_de)",
+   "hedged": false,
+   "verification_ok": true,
+   "evidence_index": "data\\autodiag\\auto-1013-161300-fa027e22.index.json",
+   "case_invalid": false,
+   "said_before_rescore": "bpfo"
+  },
+  {
+   "case": "bpfo-boundary-kurt",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "bpfo",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 160.7,
+   "report_id": 34,
+   "task_created": true,
+   "confidence": 0.92,
+   "conclusion": "驱动端轴承外圈缺陷(BPFO)：包络谱主峰134.77Hz精确命中理论BPFO=135.09Hz(偏差0.33Hz,±3Hz内)且2x/3x谐波对齐，峭度8.04远超阈值4且severe，live实时段RMS短时升至4.15，三项证据中时域与频域强一致，建议停机检查并更换驱动端轴承(bearing_de)",
+   "hedged": false,
+   "verification_ok": true,
+   "evidence_index": "data\\autodiag\\auto-1013-161504-4195471d.index.json",
+   "case_invalid": false,
+   "said_before_rescore": "bpfo"
+  },
+  {
+   "case": "bpfo-boundary-rms",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "bpfo",
+   "correct": true,
+   "triggered": true,
+   "final_state": "verification_failed",
+   "failure_reason": "tool_calls_insufficient",
+   "latency_s": 80.4,
+   "report_id": 35,
+   "task_created": true,
+   "confidence": 0.95,
+   "conclusion": "驱动端轴承外圈缺陷(BPFO)：包络谱主峰134.77Hz精确命中理论BPFO=135.09Hz(偏差0.33Hz,±3Hz内)且2x/3x谐波对齐，峭度10.78远超阈值4且severe，live实时段于故障注入时刻短时突升至7.31，时域与频域强一致，建议停机检查并更换驱动端轴承(bearing_de)",
+   "hedged": false,
+   "verification_ok": false,
+   "evidence_index": "data\\autodiag\\auto-1013-161825-60dee2c2.index.json",
+   "case_invalid": false,
+   "said_before_rescore": "bpfo"
+  },
+  {
+   "case": "bpfi-highrpm",
+   "kind": "e2e",
+   "truth": "bpfi",
+   "said": "bpfi",
+   "correct": true,
+   "triggered": true,
+   "final_state": "verification_failed",
+   "failure_reason": "tool_calls_insufficient",
+   "latency_s": 120.6,
+   "report_id": 36,
+   "task_created": true,
+   "confidence": 0.92,
+   "conclusion": "驱动端轴承内圈缺陷(BPFI)：包络谱主峰210.94Hz精确命中理论BPFI=211.20Hz(偏差0.26Hz,±3Hz内)且呈2x-5x谐波簇，峭度7.21远超阈值4且severe，live实时段RMS短时升至8.27，时域与频域强一致，建议停机检查并更换驱动端轴承(bearing_de)",
+   "hedged": false,
+   "verification_ok": false,
+   "evidence_index": "data\\autodiag\\auto-1013-161956-4af18e86.index.json",
+   "case_invalid": false,
+   "said_before_rescore": "bpfi"
+  },
+  {
+   "case": "bpfo-lowrpm",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "bpfo",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 156.8,
+   "report_id": 37,
+   "task_created": true,
+   "confidence": 0.9,
+   "conclusion": "驱动端轴承外圈缺陷(BPFO)：包络谱主峰54.69Hz精确命中理论BPFO=54.40Hz(偏差0.29Hz,±3Hz内)且2x/3x/4x谐波对齐，峭度19.73远超阈值4且severe，live实时段RMS短时升至4.58，时域与频域强一致，建议停机检查并更换驱动端轴承(bearing_de)",
+   "hedged": false,
+   "verification_ok": true,
+   "evidence_index": "data\\autodiag\\auto-1013-162206-ae5e8087.index.json",
+   "case_invalid": false,
+   "said_before_rescore": "bpfo"
+  },
+  {
+   "case": "bpfo-highrpm",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "bpfo",
+   "correct": true,
+   "triggered": true,
+   "final_state": "verification_failed",
+   "failure_reason": "tool_calls_insufficient",
+   "latency_s": 92.4,
+   "report_id": 38,
+   "task_created": true,
+   "confidence": 0.92,
+   "conclusion": "驱动端轴承外圈缺陷(BPFO)：包络谱主峰163.09Hz精确命中理论BPFO=163.20Hz(偏差0.11Hz,±3Hz内)且2x-5x谐波对齐，峭度8.98远超阈值4且severe，live实时段RMS短时升至7.29，时域与频域强一致，建议停机检查并更换驱动端轴承(bearing_de)",
+   "hedged": false,
+   "verification_ok": false,
+   "evidence_index": "data\\autodiag\\auto-1013-162523-ea679b42.index.json",
+   "case_invalid": false,
+   "said_before_rescore": "bpfo"
+  },
+  {
+   "case": "mixed-bpfo-bpfi",
+   "kind": "e2e",
+   "truth": "bpfo_bpfi",
+   "said": "bpfo_bpfi",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 229.1,
+   "report_id": 39,
+   "task_created": true,
+   "confidence": 0.88,
+   "conclusion": "驱动端轴承外圈缺陷(BPFO为主，兼内圈次峰)：包络谱主峰134.77Hz精确命中理论BPFO=135.09Hz(偏差0.33Hz,±3Hz内)，峭度6.03超阈值4且severe，live实时段RMS短时升至7.39，时域与频域强一致，建议停机检查并更换驱动端轴承(bearing_de)",
+   "hedged": false,
+   "verification_ok": true,
+   "evidence_index": "data\\autodiag\\auto-1013-162706-8e2f99e2.index.json",
+   "case_invalid": false,
+   "said_before_rescore": "bpfo"
+  },
+  {
+   "case": "unbalance-1x",
+   "kind": "e2e",
+   "truth": "unbalance",
+   "said": "unbalance",
+   "correct": true,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 104.5,
+   "report_id": 40,
+   "task_created": true,
+   "confidence": 0.9,
+   "conclusion": "驱动端转子质量不平衡：FFT主峰1×fr=49.805Hz幅值13.24独占99%以上能量，2x/1x约0.078远低于1/3判据排除不对中；包络谱无BPFO/BPFI/BSF/FTF±3Hz内显著峰排除轴承缺陷；时域severe(峭度1.52<4为持续幅值升高)，live实时段RMS由2.11短时升至9.71；建议停机检查动平衡并更换驱动端转子(bearing_de非主因，component=r",
+   "hedged": false,
+   "verification_ok": true,
+   "evidence_index": "data\\autodiag\\auto-1013-163135-342cf9f0.index.json",
+   "case_invalid": false,
+   "said_before_rescore": "unbalance"
+  },
+  {
+   "case": "looseness-harmonics",
+   "kind": "e2e",
+   "truth": "looseness",
+   "said": "no-report",
+   "correct": false,
+   "triggered": false,
+   "final_state": "idle",
+   "failure_reason": null,
+   "latency_s": null,
+   "report_id": null,
+   "task_created": false,
+   "confidence": null,
+   "conclusion": "",
+   "hedged": false,
+   "verification_ok": true,
+   "evidence_index": null,
+   "case_invalid": true
+  },
+  {
+   "case": "unknown-broadband",
+   "kind": "e2e",
+   "truth": "undetermined",
+   "said": "abnormal-untyped",
+   "correct": false,
+   "triggered": true,
+   "final_state": "done",
+   "failure_reason": null,
+   "latency_s": 160.7,
+   "report_id": 41,
+   "task_created": true,
+   "confidence": 0.82,
+   "conclusion": "驱动端联轴器/主轴不对中：FFT中2x/1x约0.40超过1/3判据符合不对中特征，包络谱在BPFO/BPFI/BSF/FTF±3Hz内无显著峰排除轴承缺陷，时域severe但峭度约3.0<4为持续幅值升高，live实时段RMS由2.11短时升至10.25；建议停机检查并校正驱动端联轴器对中(component_id=shaft)",
+   "hedged": false,
+   "verification_ok": true,
+   "evidence_index": "data\\autodiag\\auto-1013-163908-2a82eff9.index.json",
+   "case_invalid": false,
+   "said_before_rescore": "bpfo_bpfi"
+  },
+  {
+   "case": "bpfo-tool-failure",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "no-report",
+   "correct": false,
+   "triggered": true,
+   "final_state": "failed",
+   "failure_reason": "cli_failed",
+   "latency_s": 265.1,
+   "report_id": null,
+   "task_created": false,
+   "confidence": null,
+   "conclusion": "",
+   "hedged": false,
+   "verification_ok": false,
+   "evidence_index": null,
+   "case_invalid": false
+  },
+  {
+   "case": "bpfo-partial-data",
+   "kind": "e2e",
+   "truth": "bpfo",
+   "said": "no-report",
+   "correct": false,
+   "triggered": true,
+   "final_state": "failed",
+   "failure_reason": "cli_failed",
+   "latency_s": 32.1,
+   "report_id": null,
+   "task_created": false,
+   "confidence": null,
+   "conclusion": "",
+   "hedged": false,
+   "verification_ok": false,
+   "evidence_index": null,
+   "case_invalid": false
+  }
+ ]
+}

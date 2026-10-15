@@ -1,0 +1,317 @@
+{
+  "$schema": "digital-twin equipment-map v2",
+  "model": "tiaoxiangji_final_draco.glb",
+  "modelFallback": {
+    "file": "tiaoxiangji_final.glb",
+    "note": "未压缩版 56.6MB，Draco 加载失败时的兜底"
+  },
+  "root": "Synchronous_Condenser",
+  "source": {
+    "origin": "E:/zzz3.0/c.glb (Tripo AI 生成, 29 部件)",
+    "process": "语义归组为 9 节点 / 根节点缩放 ×12 至真实尺度 / 纹理 4096→2048 / gltf-transform Draco",
+    "machineSize": "11.78 x 4.58 x 4.64 m"
+  },
+  "conventions": {
+    "up": "+Y (glTF)",
+    "shaftAxis": "X",
+    "driveEnd": "+X（联轴器/接线柜侧）",
+    "nonDriveEnd": "-X",
+    "anchorSpace": "glTF 世界坐标（模型加载后直接可用，含根节点 ×12 缩放）",
+    "anchorUsage": "相机 focus 球心 / 高亮定位 / 故障标注点"
+  },
+  "thresholdLegend": {
+    "normal": "正常区间上限",
+    "warning": "预警阈值（黄色，触发告警提示）",
+    "critical": "报警/跳机阈值（红色，触发 AI 诊断 + 工单）",
+    "standards": "振动阈值参照 ISO 10816-3 / ISO 7919-2 典型整定值，温度/油压为行业惯例值——均为演示配置，可按现场整定值在后台替换"
+  },
+  "components": [
+    {
+      "id": "bearing_de",
+      "name_cn": "驱动端轴承",
+      "mesh": "Bearing_DE",
+      "anchor": [
+        3.55,
+        1.74,
+        0.57
+      ],
+      "focusRadius": 1.6,
+      "sensors": [
+        {
+          "channel": "轴振1X",
+          "desc": "驱动端 X 向轴振",
+          "unit": "μm",
+          "normal": 60,
+          "warning": 80,
+          "critical": 120
+        },
+        {
+          "channel": "轴振1Y",
+          "desc": "驱动端 Y 向轴振",
+          "unit": "μm",
+          "normal": 60,
+          "warning": 80,
+          "critical": 120
+        },
+        {
+          "channel": "轴温DE",
+          "desc": "驱动端轴瓦金属温度",
+          "unit": "°C",
+          "normal": 55,
+          "warning": 65,
+          "critical": 80
+        }
+      ],
+      "diagFeatures": [
+        "BPFO 外圈",
+        "BPFI 内圈",
+        "BSF 滚动体",
+        "FTF 保持架"
+      ],
+      "notes": "AI 诊断滚动轴承故障时的默认聚焦部件；外圈故障能量通常最大"
+    },
+    {
+      "id": "bearing_nde",
+      "name_cn": "非驱动端轴承",
+      "mesh": "Bearing_NDE",
+      "anchor": [
+        -5.06,
+        1.31,
+        0.55
+      ],
+      "focusRadius": 1.6,
+      "sensors": [
+        {
+          "channel": "轴振2X",
+          "desc": "非驱动端 X 向轴振",
+          "unit": "μm",
+          "normal": 60,
+          "warning": 80,
+          "critical": 120
+        },
+        {
+          "channel": "轴振2Y",
+          "desc": "非驱动端 Y 向轴振",
+          "unit": "μm",
+          "normal": 60,
+          "warning": 80,
+          "critical": 120
+        },
+        {
+          "channel": "轴温NDE",
+          "desc": "非驱动端轴瓦金属温度",
+          "unit": "°C",
+          "normal": 55,
+          "warning": 65,
+          "critical": 80
+        }
+      ],
+      "diagFeatures": [
+        "BPFO",
+        "BPFI",
+        "BSF",
+        "FTF"
+      ]
+    },
+    {
+      "id": "rotor",
+      "name_cn": "转子",
+      "mesh": "Rotor",
+      "anchor": [
+        -0.12,
+        1.84,
+        0.64
+      ],
+      "focusRadius": 3.2,
+      "sensors": [
+        {
+          "channel": "转速",
+          "desc": "转子转速",
+          "unit": "rpm",
+          "normal": 2980,
+          "warning": 3010,
+          "critical": 3040,
+          "note": "额定 2980，+1% 注意，+2% 严重（与 db.py RPM_NOTICE/RPM_SEVERE 同源）"
+        },
+        {
+          "channel": "轴振1X",
+          "desc": "复用驱动端轴振做转子类判决",
+          "unit": "μm",
+          "normal": 60,
+          "warning": 80,
+          "critical": 120
+        }
+      ],
+      "diagFeatures": [
+        "1X 不平衡",
+        "2X 不对中",
+        "0.5X 油膜涡动",
+        "分数谐波"
+      ],
+      "notes": "不平衡=1X 占优；不对中=2X 占优；涡动=次同步分量"
+    },
+    {
+      "id": "shaft",
+      "name_cn": "主轴/联轴器",
+      "mesh": "Shaft",
+      "anchor": [
+        3.77,
+        1.52,
+        0.56
+      ],
+      "focusRadius": 1.2,
+      "sensors": [
+        {
+          "channel": "键相",
+          "desc": "键相脉冲",
+          "unit": "-",
+          "normal": 1,
+          "warning": 0,
+          "critical": 0,
+          "note": "丢失键相=数据失效"
+        }
+      ],
+      "diagFeatures": [
+        "2X 联轴器不对中"
+      ]
+    },
+    {
+      "id": "stator",
+      "name_cn": "定子（机壳+绕组）",
+      "mesh": "Stator",
+      "anchor": [
+        -0.67,
+        2.33,
+        -0.16
+      ],
+      "focusRadius": 4.0,
+      "sensors": [
+        {
+          "channel": "定子铁芯温度",
+          "desc": "预留",
+          "unit": "°C",
+          "normal": 120,
+          "warning": 130,
+          "critical": 150
+        }
+      ],
+      "diagFeatures": [],
+      "notes": "当前后端无定子测点，预留通道位"
+    },
+    {
+      "id": "bedplate",
+      "name_cn": "底座",
+      "mesh": "Bedplate",
+      "anchor": [
+        -0.91,
+        0.93,
+        0.67
+      ],
+      "focusRadius": 4.5,
+      "sensors": [
+        {
+          "channel": "瓦振1X",
+          "desc": "轴承座水平振动",
+          "unit": "mm/s",
+          "normal": 2.8,
+          "warning": 4.5,
+          "critical": 7.1
+        },
+        {
+          "channel": "瓦振1Y",
+          "desc": "轴承座垂直振动",
+          "unit": "mm/s",
+          "normal": 2.8,
+          "warning": 4.5,
+          "critical": 7.1
+        }
+      ],
+      "diagFeatures": [
+        "基础松动",
+        "共振"
+      ],
+      "notes": "ISO 10816-3：>4.5 mm/s 预警，>7.1 mm/s 危险"
+    },
+    {
+      "id": "cooling_system",
+      "name_cn": "冷却系统",
+      "mesh": "Cooling_System",
+      "anchor": [
+        1.32,
+        2.71,
+        -0.5
+      ],
+      "focusRadius": 3.0,
+      "sensors": [
+        {
+          "channel": "冷风温度",
+          "desc": "冷油器/冷却器出口风温",
+          "unit": "°C",
+          "normal": 35,
+          "warning": 40,
+          "critical": 50
+        }
+      ],
+      "diagFeatures": [
+        "温升异常→冷却效率下降"
+      ],
+      "notes": "冷却异常会推高轴承/绕组温度，联动 bearing_* 温度通道"
+    },
+    {
+      "id": "lubrication_system",
+      "name_cn": "润滑油系统",
+      "mesh": "Lubrication_System",
+      "anchor": [
+        -0.08,
+        1.28,
+        2.13
+      ],
+      "focusRadius": 2.0,
+      "sensors": [
+        {
+          "channel": "润滑油压",
+          "desc": "主油压",
+          "unit": "MPa",
+          "normal": 0.1,
+          "warning": 0.08,
+          "critical": 0.06,
+          "note": "低于 warning 联启辅助油泵，低于 critical 跳机"
+        },
+        {
+          "channel": "油温",
+          "desc": "冷油器出口油温",
+          "unit": "°C",
+          "normal": 45,
+          "warning": 50,
+          "critical": 60
+        }
+      ],
+      "diagFeatures": [
+        "油压低→轴瓦烧毁风险",
+        "油温高→黏度下降"
+      ]
+    },
+    {
+      "id": "terminal_box",
+      "name_cn": "接线柜/控制柜",
+      "mesh": "Terminal_Box",
+      "anchor": [
+        5.28,
+        1.63,
+        0.41
+      ],
+      "focusRadius": 1.6,
+      "sensors": [
+        {
+          "channel": "柜内温度",
+          "desc": "预留",
+          "unit": "°C",
+          "normal": 45,
+          "warning": 55,
+          "critical": 65
+        }
+      ],
+      "diagFeatures": []
+    }
+  ]
+}
