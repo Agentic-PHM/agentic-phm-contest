@@ -9,3 +9,12 @@ node_modules/
 .superpowers/
 .worktrees/
 data/autodiag/
+
+# Never commit local credentials or secret-bearing environment files
+.env.*
+!.env.example
+!.env.template
+*.pem
+*.p12
+*.pfx
+*.key
