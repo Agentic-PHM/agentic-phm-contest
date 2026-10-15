@@ -47,6 +47,17 @@ cd "$AGH_DIR"
 
 AGH portable runtime 不包含在应用安装过程中下载或安装。Key 设置页只配置当前 profile 已存在的 Agnes account 和 credentialRef；profile 未初始化时先按部署手册完成初始化。
 
+## 一条命令启动（演示/评委推荐）
+
+完成一次性部署（Python 3.11 + `pip install -r requirements.txt`、AGH 运行时按
+[`scripts/setup_agh.md`](scripts/setup_agh.md) 初始化）后，日常启动只需：
+
+- Windows：双击仓库根目录 **`启动演示.bat`**（或 `python scripts/start_demo.py`）；
+- 脚本会自动：启动 AGH 运行时与平台后端（已在运行则跳过）→ 模型链路暖机 → 复位演示场景 → 打开浏览器；
+- 停止：双击 **`停止演示.bat`**（或 `python scripts/stop_demo.py`）；日志在 `logs/`。
+
+测试依赖单独安装：`pip install -r requirements-dev.txt`（CI 也用它）。
+
 ## 运行模式与离线行为
 
 - **智能体增强模式**：基础监测、趋势和阈值报警持续运行；AGH 与 Agnes 均通过验证后，严重报警可启动自主取证、诊断、报告和智能体工单。聊天和所有聊天操作均经 AGH。
