@@ -14,6 +14,9 @@
 
 ## 本地启动
 
+> 演示/评审推荐直接看下一节 **「一条命令启动」**：脚本会自动拉起 AGH 与后端，并在需要时自动初始化 AGH 运行时。
+> 本节是**手工分步**路径，适合单独调试两个进程或自定义端口。
+
 需要 Python 3.11、项目 Python 依赖，以及已初始化的 AGH portable runtime。首次部署先按 [`scripts/setup_agh.md`](scripts/setup_agh.md) 准备 AGH 和 profile。两个进程必须使用相同的 `AGH_DIR`、`AGH_HOME`、`PHM_AGH_PROFILE` 与 `AGH_PORT`。
 
 以下命令以 Windows + Git Bash 为例，将路径替换为本机目录。在两个终端设置相同环境：
@@ -141,8 +144,8 @@ curl -s -H "X-Operator-Token: $TOKEN" \
 ## 开发验证
 
 ```powershell
-$env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'
-& 'D:\Python311\python.exe' -m pytest tests/ -q
+$env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'   # 避免本机第三方 pytest 插件干扰
+python -m pytest tests/ -q                 # 容器/CI 直接用 `python`，本机可换成实际解释器路径
 ```
 
 前端测试与构建必须从 `dashboard/` 执行：
