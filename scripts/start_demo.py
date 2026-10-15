@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
-"""评委/演示一条命令启动：AGH serve（如未启动）→ 暖机 → phmlite（如未启动）
-→ 复位场景 → 打开浏览器。全部就绪后自动退出，两个服务保持后台运行。
+"""评委/演示一条命令启动：AGH 运行时（缺失则自动初始化）→ phmlite → 复位场景
+→ 打开浏览器。全部就绪后自动退出，两个服务保持后台运行。
 
 用法：
   python scripts/start_demo.py            # 正常启动（会打开默认浏览器）
   python scripts/start_demo.py --no-browser
   python scripts/start_demo.py --no-warm  # 跳过模型暖机（省一次小调用）
+  python scripts/start_demo.py --no-bootstrap  # AGH 缺失时不自动初始化（离线/已手工部署）
 
-前置：本机已完成一次性部署（pip install -r requirements.txt、AGH 运行时按
-scripts/setup_agh.md 初始化）。AGH 未配置时监测/报警仍可用，自动诊断不可用（会明确提示）。
+前置：Python 依赖已装（pip install -r requirements.txt）。AGH 运行时若不存在，
+本脚本会用仓库内 vendor/agh-portable-*.zip 自动解压并初始化（含 DACL/补丁/守门），
+因此全新 clone 也只需这一条命令。Agnes Key 未提供时自动诊断不可用，可在
+「系统设置 → Agnes API Key」录入后重试；监测/报警/趋势不受影响。
 """
 import argparse
 import os
@@ -55,11 +58,37 @@ def wait_up(port, timeout):
     return False
 
 
+def ensure_agh_runtime():
+    """AGH 运行时缺失时自动初始化（解压 vendor zip → DACL → Key → consent → 补丁 → 守门）。
+
+    全新 clone 上这一步是"一条命令"能否成立的关键：评委的机器上没有 D:\\agh-contest。
+    复用 scripts/setup_agh_runtime.py（幂等），而不是在这里复制一遍初始化逻辑。"""
+    if (AGH_DIR / "node24" / "node.exe").is_file() and (AGH_DIR / "runtime" / "agnes.mjs").is_file():
+        return "已就绪"
+    vendor = sorted((REPO / "vendor").glob("agh-portable-*.zip"))
+    if not vendor:
+        return "跳过（vendor/ 下没有 AGH portable 包）"
+    print(f"未检测到 AGH 运行时（{AGH_DIR}），正在用 {vendor[-1].name} 自动初始化…")
+    print("（解压 + 权限 + 补丁，首次约 1~2 分钟）")
+    env = dict(os.environ, AGH_DIR=str(AGH_DIR), AGH_HOME=str(AGH_HOME),
+               PHM_AGH_PROFILE=PROFILE)
+    proc = subprocess.run([sys.executable, str(REPO / "scripts" / "setup_agh_runtime.py")],
+                          cwd=str(REPO), env=env, capture_output=True, text=True,
+                          encoding="utf-8", errors="replace")
+    if proc.returncode == 0:
+        return "已自动初始化"
+    print("AGH 自动初始化失败，末尾输出如下（完整说明见 scripts/setup_agh.md）：")
+    print((proc.stdout or "").strip()[-1200:])
+    if proc.stderr:
+        print((proc.stderr or "").strip()[-600:])
+    return "未配置（自动初始化失败）"
+
+
 def start_agh():
     if up(AGH_PORT):
         return "已在运行"
     if not (AGH_DIR / "node24" / "node.exe").is_file():
-        return "未配置（AGH 运行时不存在）——监测/报警可用，自动诊断不可用"
+        return "未配置（AGH 运行时缺失）——监测/报警可用，自动诊断不可用"
     spawn([str(AGH_DIR / "node24" / "node.exe"), str(AGH_DIR / "runtime" / "agnes.mjs"),
            "serve", "--profile", PROFILE, "--cwd", str(REPO), "--port", AGH_PORT],
           cwd=AGH_DIR, log_name="agh-serve.log",
@@ -115,9 +144,14 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-browser", action="store_true")
     ap.add_argument("--no-warm", action="store_true")
+    ap.add_argument("--no-bootstrap", action="store_true",
+                    help="AGH 运行时缺失时不自动初始化（离线或已手工部署）")
     args = ap.parse_args()
 
     print("== Agentic-PHM 演示启动 ==")
+    boot = "跳过（--no-bootstrap）" if args.no_bootstrap else ensure_agh_runtime()
+    if boot not in ("已就绪", "跳过（--no-bootstrap）"):
+        print(f"[0/4] AGH 运行时初始化：{boot}")
     agh_state = start_agh()
     print(f"[1/4] AGH 运行时(4178)：{agh_state}")
     phm_state = start_phmlite()
@@ -144,7 +178,8 @@ def main():
         webbrowser.open(url)
     print(f"\n演示地址：{url}（登录 admin / 123456）")
     if "未配置" in agh_state:
-        print("提示：AGH 运行时未配置，自动诊断不可用；完整演示需按 scripts/setup_agh.md 初始化。")
+        print("提示：AGH 运行时不可用，自动诊断不可用；详见 scripts/setup_agh.md，"
+              "或确认 vendor/ 下有 agh-portable-*.zip 后重跑本命令（会自动初始化）。")
     print("两个服务已在后台运行（日志在 logs/）；停止演示可运行 python scripts/stop_demo.py。")
 
 

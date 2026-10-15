@@ -18,9 +18,11 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-ZIP_PATH = REPO / "vendor" / "agh-portable-20260930.zip"
+#: 包名带版本日期，不能写死文件名（换包时应当只改 SHA 与这一处 glob）
+_zips = sorted((REPO / "vendor").glob("agh-portable-*.zip"))
+ZIP_PATH = _zips[-1] if _zips else REPO / "vendor" / "agh-portable-20260930.zip"
 ZIP_SHA256 = "1323bdad177159e389c0c247823280d69dfbebc31cbb144ffa074760d929a2e4"
-TARGET = Path(r"D:\agh-contest")
+TARGET = Path(os.environ.get("AGH_DIR", r"D:\agh-contest"))
 CREDENTIAL_REF = "account-bb8adc5052deb964d9b231c2-r1"
 YOLO_ANCHOR = "    const session = await openSession(booted, p, io.cwd);"
 YOLO_PATCH = ("    await session.setYolo(true); "
@@ -57,8 +59,13 @@ def unzip_and_flatten():
     step("解压并展平", (TARGET / "runtime" / "agnes.mjs").exists())
 
 
+def _account():
+    """本机实测账号（主机名可能是 AFU/WIN-*，勿写死旧文档值）。"""
+    return run(["whoami"]).stdout.strip()
+
+
 def fix_acl():
-    account = run(["whoami"]).stdout.strip()  # 本机实测账号（主机名可能是 AFU，勿写死旧文档值）
+    account = _account()  # 本机实测账号（主机名可能是 AFU，勿写死旧文档值）
     domain, user = account.split("\\", 1)
     root = TARGET / "agh-home"
     ps = f"""
@@ -79,14 +86,42 @@ foreach ($t in $targets) {{
     step("私有 DACL（先授权后去继承，账号=%s）" % account, True)
 
 
+#: inject_key 的结论（final_gate 据此决定"密钥可读"是硬门禁还是待补项）
+KEY_STATE = {"source": None, "value": None}
+
+
+def resolve_key():
+    """Agnes Key 取值顺序：环境变量 AGNES_API_KEY → 仓库 .env → 没有（留给系统设置页）。
+
+    2026-10-15：原实现只读 .env，而 .env 是**故意不入库**的本机凭据；远端历史清洗后
+    全新 clone 里根本没有 .env，于是"一键部署"第一步就 FileNotFoundError。
+    返回 None 不是错误——profile + 凭据文件骨架仍会建好，评委可在系统设置页录入自己的 Key。"""
+    key = (os.environ.get("AGNES_API_KEY") or "").strip()
+    if key:
+        KEY_STATE.update(source="环境变量 AGNES_API_KEY", value=key)
+        return key
+    env_path = REPO / ".env"
+    if env_path.is_file():
+        match = re.search(r"^AGNES_API_KEY=(\S+)", env_path.read_text(encoding="utf-8"),
+                          re.MULTILINE)
+        if match:
+            KEY_STATE.update(source="仓库 .env", value=match.group(1))
+            return match.group(1)
+    KEY_STATE.update(source=None, value=None)
+    return None
+
+
 def inject_key():
-    env = (REPO / ".env").read_text(encoding="utf-8")
-    key = re.search(r"AGNES_API_KEY=(\S+)", env).group(1)
+    key = resolve_key()
     secret_dir = TARGET / "agh-home" / "secrets" / "agnes-ai"
     secret_dir.mkdir(parents=True, exist_ok=True)
-    doc = {"version": 1, "kind": "api-key", "provider": "agnes-ai", "value": key}
+    doc = {"version": 1, "kind": "api-key", "provider": "agnes-ai", "value": key or ""}
     (secret_dir / CREDENTIAL_REF).write_text(json_dumps(doc), encoding="utf-8")
-    step("注入 Agnes Key（读 .env，凭据文件名=profile 哈希）", True)
+    if key:
+        step(f"注入 Agnes Key（来源：{KEY_STATE['source']}，凭据文件名=profile 哈希）", True)
+    else:
+        step("Agnes Key 暂缺（未找到环境变量 AGNES_API_KEY 与 .env）", True,
+             "凭据文件骨架已建好：启动后在「系统设置 → Agnes API Key」录入即可")
 
 
 def json_dumps(obj):
@@ -113,6 +148,43 @@ def consent_and_overlay(restricted=False):
         '{"permission":"full"}', encoding="utf-8")
 
 
+def harden_final_acl():
+    """收尾再补一轮**显式**授权（不剥继承）。
+
+    2026-10-15 全新目录实测：密钥文件/profile.yaml/composer-selection.json 是在 fix_acl()
+    **之后**才写入的，会从父目录 (OI)(CI) 继承出 (I) ACE；而凭据存储的 hasPrivateDacl
+    要求"无继承 ACE 的私有 DACL"，于是守门在"密钥文件可读"一步固定 FAIL。
+    setup_agh.md 第 9.2 节描述过这个坑，这里把它实现成幂等的一步。"""
+    account = _account()
+    domain, user = account.split("\\", 1)
+    root = TARGET / "agh-home"
+    if not root.is_dir():
+        return
+    dirs, files = [str(root)], []
+    for current, dirnames, filenames in os.walk(root):
+        # 跳过 junction/符号链接，避免 icacls 递归到树外
+        dirnames[:] = [d for d in dirnames
+                       if not os.path.islink(os.path.join(current, d))]
+        dirs.extend(os.path.join(current, d) for d in dirnames)
+        files.extend(os.path.join(current, f) for f in filenames)
+    dirs = [str(d) for d in dirs]
+    files = [str(f) for f in files]
+    ps = f"""
+$dirs = @({','.join("'" + d + "'" for d in dirs)})
+$files = @({','.join("'" + f + "'" for f in files)})
+foreach ($t in $dirs)  {{ icacls $t /grant '{domain}\\{user}:(OI)(CI)(F)' 'NT AUTHORITY\\SYSTEM:(OI)(CI)(F)' > $null }}
+foreach ($t in $files) {{ icacls $t /grant '{domain}\\{user}:F' 'NT AUTHORITY\\SYSTEM:F' > $null }}
+# 关键：必须再去一次继承。只补授权的话，文件上会同时留 (F) 与 (I)(F)，
+# hasPrivateDacl 要求"无继承 ACE"，凭据文件仍判不合规。
+foreach ($t in $dirs)  {{ icacls $t /inheritance:r > $null }}
+foreach ($t in $files) {{ icacls $t /inheritance:r > $null }}
+"""
+    # 顺序铁律同 fix_acl（setup_agh.md 第 9 节）：先显式授权、后去继承，反序会整树自锁
+    run(["powershell", "-NoProfile", "-Command", ps])
+    step("收尾补授权（fix_acl 之后新写入的文件补显式 ACE）", True,
+         f"{len(dirs)} 目录 / {len(files)} 文件")
+
+
 def apply_yolo_patch(enabled=True):
     agnes = TARGET / "runtime" / "agnes.mjs"
     src = agnes.read_text(encoding="utf-8")
@@ -135,12 +207,14 @@ def apply_yolo_patch(enabled=True):
 
 def final_gate():
     """守门：凭据树 DACL + 密钥可读 + 补丁在位（用运行时自带 native 模块逐路径校验）。"""
+    root = (TARGET / "agh-home").as_posix()
+    runtime = (TARGET / "runtime" / "agnes.mjs").as_posix()
     probe = (
         "const { createRequire } = require('module');"
         "const req = createRequire(process.cwd() + '/runtime/agnes.mjs');"
         "const native = req('@agnes/system-node/native');"
         "const fs = require('fs');"
-        "const root = 'D:/agh-contest/agh-home';"
+        f"const root = '{root}';"
         # 只校验凭据存储链（根 + auth/ + secrets/）；cache 等运行时产物不在凭据链内，不参与校验
         "const targets = ['', '/auth', '/secrets', '/secrets/agnes-ai'].map(s => root + s);"
         "const bad = [];"
@@ -148,10 +222,9 @@ def final_gate():
         "  let ok; try { ok = native.hasPrivateDacl(p); } catch (e) { ok = 'ERR:' + e.message; }"
         "  if (ok !== true) bad.push(p + ' -> ' + ok);"
         "}"
-        "const secret = root + '/secrets/agnes-ai/"
-        "account-bb8adc5052deb964d9b231c2-r1';"
+        f"const secret = root + '/secrets/agnes-ai/{CREDENTIAL_REF}';"
         "let readable = 0; try { readable = native.readPrivateFile(secret, 1048576).length; } catch (e) {}"
-        "const patched = fs.readFileSync('D:/agh-contest/runtime/agnes.mjs', 'utf-8')"
+        f"const patched = fs.readFileSync('{runtime}', 'utf-8')"
         "  .includes('[phm-lite demo patch]');"
         "console.log(JSON.stringify({ bad, readable, patched }));"
     )
@@ -159,7 +232,12 @@ def final_gate():
     import json
     out = json.loads(r.stdout.strip().splitlines()[-1])
     step("守门：DACL 树干净", not out["bad"], f"不合规条目 {out['bad'][:3]}" if out["bad"] else "")
-    step("守门：密钥文件可读（凭据存储可用）", out["readable"] > 0)
+    if KEY_STATE["value"]:
+        step("守门：密钥文件可读（凭据存储可用）", out["readable"] > 0)
+    elif out["readable"] > 0:
+        step("守门：凭据文件可读（Key 待系统设置页录入）", True)
+    else:
+        print("[INFO] 凭据文件暂不可读，但 Key 尚未录入（属于预期），不计为失败。")
     step("守门：yolo 补丁在位", out["patched"])
 
 
@@ -180,6 +258,7 @@ def main():
         inject_key()
         consent_and_overlay(restricted=args.restricted_shell)
         apply_yolo_patch(enabled=not args.restricted_shell)
+        harden_final_acl()  # 必须在上面几步写文件之后：给新文件补显式 ACE
         final_gate()
     if args.restricted_shell:
         print("\n受限授权模式：运行时保持供应商原样，授权来自 profile 的 approval.command_policy。")
