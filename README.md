@@ -56,7 +56,7 @@ AGH portable runtime 不包含在应用安装过程中下载或安装。Key 设�
 - 脚本会自动：启动 AGH 运行时与平台后端（已在运行则跳过）→ 模型链路暖机 → 复位演示场景 → 打开浏览器；
 - 停止：双击 **`停止演示.bat`**（或 `python scripts/stop_demo.py`）；日志在 `logs/`。
 
-测试依赖单独安装：`pip install -r requirements-dev.txt`（CI 也用它）。
+测试与 CI 依赖已包含在 `requirements.txt`（pytest），无需单独安装。
 
 ## 运行模式与离线行为
 
