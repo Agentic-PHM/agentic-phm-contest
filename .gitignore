@@ -2,6 +2,10 @@ __pycache__/
 *.pyc
 .env
 data/*.db
+# SQLite 运行期副产物：只写 data/*.db 覆盖不到 -journal/-wal/-shm
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
 data/operation-mode.json
 agh-home/
 agnes-harness/
