@@ -11,3 +11,12 @@ node_modules/
 data/autodiag/
 data/operator_sessions.json
 graphify-out/
+
+# Never commit local credentials or secret-bearing environment files
+.env.*
+!.env.example
+!.env.template
+*.pem
+*.p12
+*.pfx
+*.key
