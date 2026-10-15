@@ -38,10 +38,11 @@ def up(port):
         return False
 
 
-def spawn(cmd, cwd, log_name):
+def spawn(cmd, cwd, log_name, env_extra=None):
     LOG_DIR.mkdir(parents=True, exist_ok=True)
+    env = dict(os.environ, **(env_extra or {}))
     log = open(LOG_DIR / log_name, "ab")
-    return subprocess.Popen(cmd, cwd=str(cwd), stdout=log, stderr=log,
+    return subprocess.Popen(cmd, cwd=str(cwd), stdout=log, stderr=log, env=env,
                             creationflags=DETACHED, close_fds=True)
 
 
@@ -61,7 +62,11 @@ def start_agh():
         return "未配置（AGH 运行时不存在）——监测/报警可用，自动诊断不可用"
     spawn([str(AGH_DIR / "node24" / "node.exe"), str(AGH_DIR / "runtime" / "agnes.mjs"),
            "serve", "--profile", PROFILE, "--cwd", str(REPO), "--port", AGH_PORT],
-          cwd=AGH_DIR, log_name="agh-serve.log")
+          cwd=AGH_DIR, log_name="agh-serve.log",
+          # AGH 的 daemon 用 AGH_HOME 定位凭据存储；缺了它 serve 会
+          # "daemon child exited before readiness (1)"（与 agh_runtime._invoke 同一口径）。
+          env_extra={"AGH_DIR": str(AGH_DIR), "AGH_HOME": str(AGH_HOME),
+                     "PHM_AGH_PROFILE": PROFILE})
     ok = wait_up(AGH_PORT, 90)
     return "已启动" if ok else "启动超时（90s）——查看 logs/agh-serve.log"
 
@@ -99,6 +104,14 @@ def reset_scenario():
 
 
 def main():
+    # 启动演示.bat 已 chcp 65001：把 stdout/stderr 也钉成 UTF-8，
+    # 否则中文提示会按 cp936 编码进 UTF-8 控制台，显示成乱码。
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):  # 非 tty / 被重定向时尽力而为
+            pass
+
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-browser", action="store_true")
     ap.add_argument("--no-warm", action="store_true")
