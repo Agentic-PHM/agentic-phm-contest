@@ -49,14 +49,25 @@ AGH portable runtime 不包含在应用安装过程中下载或安装。Key 设�
 
 ## 一条命令启动（演示/评委推荐）
 
-完成一次性部署（Python 3.11 + `pip install -r requirements.txt`、AGH 运行时按
-[`scripts/setup_agh.md`](scripts/setup_agh.md) 初始化）后，日常启动只需：
+前置只有两件事：**Python 3.11+**，以及 `pip install -r requirements.txt`。
 
 - Windows：双击仓库根目录 **`启动演示.bat`**（或 `python scripts/start_demo.py`）；
-- 脚本会自动：启动 AGH 运行时与平台后端（已在运行则跳过）→ 模型链路暖机 → 复位演示场景 → 打开浏览器；
+- 脚本会自动：**检测到没有 AGH 运行时就用仓库内 `vendor/agh-portable-*.zip` 自动初始化**
+  （解压 → 私有 DACL → Key → consent → yolo 补丁 → 守门，首次约 1~2 分钟）
+  → 启动 AGH 与平台后端（已在运行则跳过）→ 模型链路暖机 → 复位演示场景 → 打开浏览器；
 - 停止：双击 **`停止演示.bat`**（或 `python scripts/stop_demo.py`）；日志在 `logs/`。
 
+**Agnes Key**（自动诊断必需，监测/报警/趋势不需要）按以下优先级取用：
+
+1. 系统环境变量 `AGNES_API_KEY`；
+2. 仓库根目录 `.env` 里的 `AGNES_API_KEY=...`（可照 `.env.example` 复制，该文件不入库）；
+3. 都没有——服务照常启动，自动诊断暂不可用；登录后到
+   **「系统设置 → Agnes API Key」**录入本机自己的 Key 即可（页面不回显 Key）。
+
 测试与 CI 依赖已包含在 `requirements.txt`（pytest），无需单独安装。
+
+> 想换安装位置：设 `AGH_DIR`（默认 `D:\agh-contest`）即可，脚本与后端统一读它。
+> 已手工部署、不希望脚本自动初始化时，加 `--no-bootstrap`。
 
 ## 运行模式与离线行为
 

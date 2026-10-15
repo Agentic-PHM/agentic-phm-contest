@@ -207,6 +207,25 @@ D:/Python311/python.exe scripts/setup_agh_runtime.py --verify-only  # 只跑守�
 D:/Python311/python.exe scripts/setup_agh_runtime.py --restricted-shell  # 受限授权（见 10.6）
 ```
 
+### 10.5.1 全新机器（评委/新 clone）
+
+`python scripts/start_demo.py`（或双击 `启动演示.bat`）**会自动调用上面的全量重建**——
+检测到 `AGH_DIR` 下没有运行时才触发，已部署的机器不受影响（想关掉用 `--no-bootstrap`）。
+安装目录由环境变量 `AGH_DIR` 控制（默认 `D:\agh-contest`），脚本与后端读同一个值。
+
+Agnes Key 取值顺序：环境变量 `AGNES_API_KEY` → 仓库 `.env`（可照 `.env.example` 复制）
+→ 都没有。最后一种**不算失败**：profile 与凭据文件骨架照建，服务照起，
+评委在「系统设置 → Agnes API Key」录入自己的 Key 即可。
+
+### 10.5.2 两个已知坑（2026-10-15 实测，脚本已自动处理）
+
+- **旧文档写死的 ACL 账号名不可用**：主机名换过（`WIN-1IB86RUVKU7` → `AFU` → …），
+  脚本一律用 `whoami` 实测值，不要照抄第 2 节的硬编码例子。
+- **`fix_acl()` 之后才写入的文件需要收尾补授权**：密钥文件 / `profile.yaml` /
+  `composer-selection.json` 是在去继承之后写出的，会继承出 `(I)` ACE；而
+  `hasPrivateDacl` 要求"无继承 ACE 的私有 DACL"，只补授权不剥继承仍判不合规。
+  脚本末尾的 `harden_final_acl()` 做「再授权 + 再去继承」，守门因此能过。
+
 ### 10.6 受限授权替代方案（P1 问题7，2026-10-13 调研）
 
 **问题**：10.4 的 yolo 补丁是"任意 Shell 执行"级授权，不是"只允许几个工业接口"。
